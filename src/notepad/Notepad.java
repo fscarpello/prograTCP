@@ -5,9 +5,7 @@
  */
 package notepad;
 
-import com.sun.glass.events.WindowEvent;
 import java.awt.HeadlessException;
-import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
