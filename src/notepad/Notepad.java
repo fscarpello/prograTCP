@@ -5,7 +5,9 @@
  */
 package notepad;
 
+import com.sun.glass.events.WindowEvent;
 import java.awt.HeadlessException;
+import java.awt.Window;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -53,7 +55,12 @@ public class Notepad extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         SalirjMenuItem = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jTextArea.setColumns(20);
         jTextArea.setRows(5);
@@ -158,9 +165,8 @@ public class Notepad extends javax.swing.JFrame {
 
     private void SalirjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirjMenuItemActionPerformed
         // TODO add your handling code here:
-        if(cambioArchivo() == 1)
-            return;
-        System.exit(0);
+        if(cambioArchivo() == 0)
+            System.exit(0);
     }//GEN-LAST:event_SalirjMenuItemActionPerformed
 
     private void GuardarArchivojMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarArchivojMenuItemActionPerformed
@@ -197,6 +203,7 @@ public class Notepad extends javax.swing.JFrame {
 
     private void NuevoArchivojMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoArchivojMenuItemActionPerformed
         if(cambioArchivo() != 1){
+           isFileChange = false;
            archivoFile = null;
            jTextArea.setText("");           
         }
@@ -223,6 +230,13 @@ public class Notepad extends javax.swing.JFrame {
         // TODO add your handling code here:
         isFileChange = true;
     }//GEN-LAST:event_jTextAreaKeyPressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        if(cambioArchivo() == 0){
+            System.exit(0);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     private int cambioArchivo() throws HeadlessException {
         // TODO add your handling code here:
