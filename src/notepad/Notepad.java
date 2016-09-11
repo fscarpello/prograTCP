@@ -170,27 +170,28 @@ public class Notepad extends javax.swing.JFrame {
     private void guardar() throws HeadlessException {
         // TODO add your handling code here:
         FileWriter writer;
-        
-        if(archivoFile != null){
-            try{
-                writer = new FileWriter(archivoFile);
-                jTextArea.write(writer);
-                isFileChange = false;
-            } catch (IOException ex) {
-                Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else{
-            JFileChooser fileChooser = new JFileChooser();
-            if(fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
-                return;
-            try{
-                archivoFile = fileChooser.getSelectedFile();
-                writer = new FileWriter(archivoFile);
-                jTextArea.write(writer);
-                isFileChange = false;
-            } catch (IOException ex) {
-                Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if(isFileChange == true){
+            if(archivoFile != null){
+                try{
+                    writer = new FileWriter(archivoFile);
+                    jTextArea.write(writer);
+                    isFileChange = false;
+                } catch (IOException ex) {
+                    Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else{
+                JFileChooser fileChooser = new JFileChooser();
+                if(fileChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION)
+                    return;
+                try{
+                    archivoFile = fileChooser.getSelectedFile();
+                    writer = new FileWriter(archivoFile);
+                    jTextArea.write(writer);
+                    isFileChange = false;
+                } catch (IOException ex) {
+                    Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }            
         }
     }
 
@@ -225,16 +226,18 @@ public class Notepad extends javax.swing.JFrame {
 
     private int cambioArchivo() throws HeadlessException {
         // TODO add your handling code here:
-        int aux = JOptionPane.showConfirmDialog(this, "El contenido del archivo no ha sido guardado. ¿Desea hacerlo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION);
-        if (aux == JOptionPane.YES_OPTION) {
-            guardar();
-        } else {
-            if (aux == JOptionPane.NO_OPTION) {
-            } else {
-                if (aux == JOptionPane.CANCEL_OPTION) {
-                    return 1;
-                }
-            }
+        if(isFileChange == true){
+            int aux = JOptionPane.showConfirmDialog(this, "El contenido del archivo no ha sido guardado. ¿Desea hacerlo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION);
+            if (aux == JOptionPane.YES_OPTION) {
+               guardar();
+           } else {
+               if (aux == JOptionPane.NO_OPTION) {
+               } else {
+                   if (aux == JOptionPane.CANCEL_OPTION) {
+                       return 1;
+                   }
+               }
+           }           
         }
         return 0;
     }
