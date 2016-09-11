@@ -44,8 +44,8 @@ public class Notepad extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea = new javax.swing.JTextArea();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        NotepadjMenuBar = new javax.swing.JMenuBar();
+        ArchivojMenu = new javax.swing.JMenu();
         NuevoArchivojMenuItem = new javax.swing.JMenuItem();
         AbrirArchivojMenuItem = new javax.swing.JMenuItem();
         GuardarArchivojMenuItem = new javax.swing.JMenuItem();
@@ -69,9 +69,9 @@ public class Notepad extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTextArea);
 
-        jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        NotepadjMenuBar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jMenu1.setText("Archivo");
+        ArchivojMenu.setText("Archivo");
 
         NuevoArchivojMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
         NuevoArchivojMenuItem.setText("Nuevo");
@@ -80,7 +80,7 @@ public class Notepad extends javax.swing.JFrame {
                 NuevoArchivojMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(NuevoArchivojMenuItem);
+        ArchivojMenu.add(NuevoArchivojMenuItem);
 
         AbrirArchivojMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         AbrirArchivojMenuItem.setText("Abrir");
@@ -89,7 +89,7 @@ public class Notepad extends javax.swing.JFrame {
                 AbrirArchivojMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(AbrirArchivojMenuItem);
+        ArchivojMenu.add(AbrirArchivojMenuItem);
 
         GuardarArchivojMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_MASK));
         GuardarArchivojMenuItem.setText("Guardar");
@@ -98,7 +98,7 @@ public class Notepad extends javax.swing.JFrame {
                 GuardarArchivojMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(GuardarArchivojMenuItem);
+        ArchivojMenu.add(GuardarArchivojMenuItem);
 
         GuardarComojMenuItem.setText("Guardar como...");
         GuardarComojMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -106,8 +106,8 @@ public class Notepad extends javax.swing.JFrame {
                 GuardarComojMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(GuardarComojMenuItem);
-        jMenu1.add(jSeparator1);
+        ArchivojMenu.add(GuardarComojMenuItem);
+        ArchivojMenu.add(jSeparator1);
 
         SalirjMenuItem.setText("Salir");
         SalirjMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -115,11 +115,11 @@ public class Notepad extends javax.swing.JFrame {
                 SalirjMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(SalirjMenuItem);
+        ArchivojMenu.add(SalirjMenuItem);
 
-        jMenuBar1.add(jMenu1);
+        NotepadjMenuBar.add(ArchivojMenu);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(NotepadjMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -293,12 +293,12 @@ public class Notepad extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AbrirArchivojMenuItem;
+    private javax.swing.JMenu ArchivojMenu;
     private javax.swing.JMenuItem GuardarArchivojMenuItem;
     private javax.swing.JMenuItem GuardarComojMenuItem;
+    private javax.swing.JMenuBar NotepadjMenuBar;
     private javax.swing.JMenuItem NuevoArchivojMenuItem;
     private javax.swing.JMenuItem SalirjMenuItem;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTextArea jTextArea;
