@@ -71,8 +71,6 @@ public class Notepad extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTextArea);
 
-        jMenuBar1.setBackground(new java.awt.Color(0, 0, 153));
-        jMenuBar1.setForeground(new java.awt.Color(255, 51, 51));
         jMenuBar1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jMenu1.setText("Archivo");
