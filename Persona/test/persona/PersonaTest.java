@@ -6,6 +6,8 @@
 
 package persona;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import micalendar.MiCalendar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -16,7 +18,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author laboratorios
+ * @author Franco Scarpello
  */
 public class PersonaTest {
     
@@ -43,11 +45,13 @@ public class PersonaTest {
      * Test of setDni method, of class Persona.
      */
     @Test
-    public void testSetDni() {
+    public void testSetDni() throws Exception {
         System.out.println("setDni");
-        int dni = 0;
+        int dni = 1;
         Persona instance = new Persona();
         instance.setDni(dni);
+        if(dni < 1)
+            throw new Exception("El DNI " + dni + " es inválido.");
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -97,7 +101,7 @@ public class PersonaTest {
      * Test of setGenero method, of class Persona.
      */
     @Test
-    public void testSetGenero() {
+    public void testSetGenero() throws Exception {
         System.out.println("setGenero");
         char genero = ' ';
         Persona instance = new Persona();
@@ -155,6 +159,12 @@ public class PersonaTest {
         System.out.println("main");
         String[] args = null;
         Persona.main(args);
+        Persona p1;
+        try{
+            p1 = new Persona(0,"Franco Scarpello",'M', new MiCalendar(4,10,1993));
+        } catch (Exception ex) {
+            Logger.getLogger(PersonaTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

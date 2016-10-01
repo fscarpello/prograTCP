@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 
 /**
  *
- * @author laboratorios
+ * @author Franco Scarpello
  */
 public class MiCalendar extends GregorianCalendar {
 
