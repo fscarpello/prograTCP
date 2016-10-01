@@ -5,10 +5,8 @@
 * Apellido y Nombre --> string
 * Género --> char
 * Fecha Nacimiento --> Calendar(Luego actualizarlo a MiCalendar)
-
-
-## Setter and getter.
-Pruebas Unitarias.
+Agregar Setter and getter.
+Agregar Pruebas Unitarias.
 
 ## Crear clase MiCalendar
 * Hereda de GregorianCalendar
