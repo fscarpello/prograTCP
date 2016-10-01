@@ -1,19 +1,19 @@
 # Persona
 
-Crear clase Persona
+## Crear clase Persona
 * DNI --> int
 * Apellido y Nombre --> string
 * Género --> char
 * Fecha Nacimiento --> Calendar(Luego actualizarlo a MiCalendar)
 
 
-Setter and getter.
+## Setter and getter.
 Pruebas Unitarias.
 
-Crear clase MiCalendar
+## Crear clase MiCalendar
 * Hereda de GregorianCalendar
 
-Crear clase Alumno
+## Crear clase Alumno (Dentro del proyecto de Persona)
 * Hereda de Persona
 * Materias Aprobadas --> int
 * Promedio --> float
