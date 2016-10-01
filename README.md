@@ -4,11 +4,12 @@
 * DNI --> int
 * Apellido y Nombre --> string
 * Género --> char
-* Fecha Nacimiento --> Calendar(Luego actualizarlo a MiCalendar)
-Agregar Setter and getter.
-Agregar Pruebas Unitarias.
+* Fecha Nacimiento --> Importar el proyecto MiCalendar a bibliotecas y luego consumirlo.
 
-## Crear clase MiCalendar
+* Agregar Setters and getters.
+* Agregar Pruebas Unitarias.
+
+## Crear clase MiCalendar (es un proyecto aparte)
 * Hereda de GregorianCalendar
 
 ## Crear clase Alumno (Dentro del proyecto de Persona)
