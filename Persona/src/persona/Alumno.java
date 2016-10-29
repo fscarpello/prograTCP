@@ -16,6 +16,7 @@ public class Alumno extends Persona
 {
     public Alumno() throws FechaInvalidaException
     {
+        
     }
      
  
@@ -63,7 +64,11 @@ public class Alumno extends Persona
     @Override
     public String toString()
     {
-        return super.toString() + "\t" + String.format("%02d", cantMatAprob) + "\t" + carrera + "\t" + fechaIngr.toString() + "\t" + String.format("%05.2f", promedio);
+        return super.toString() + "\t" +
+               fechaIngr.toString() + "\t" +
+               String.format("%02d", cantMatAprob) + "\t" +
+               String.format("%02.2f", promedio) + "\t" +
+               carrera;
     }
      
      
