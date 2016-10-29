@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
@@ -51,7 +52,7 @@ public class ABM extends javax.swing.JFrame {
         seleccionarArchivoButton = new javax.swing.JButton();
         dniTextField = new javax.swing.JTextField();
         apynTextField = new javax.swing.JTextField();
-        carreraComboBox = new javax.swing.JComboBox<>();
+        carreraComboBox = new javax.swing.JComboBox<String>();
         dniLabel = new javax.swing.JLabel();
         apynLabel = new javax.swing.JLabel();
         fecNacLabel = new javax.swing.JLabel();
@@ -63,7 +64,7 @@ public class ABM extends javax.swing.JFrame {
         cancelarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         alumnosTable = new javax.swing.JTable();
-        sexoComboBox = new javax.swing.JComboBox<>();
+        sexoComboBox = new javax.swing.JComboBox<String>();
         promedioTextField = new javax.swing.JTextField();
         cantMatAprobTextField = new javax.swing.JTextField();
         sexoLabel = new javax.swing.JLabel();
@@ -107,7 +108,7 @@ public class ABM extends javax.swing.JFrame {
             }
         });
 
-        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INF", "ELE", "ABO", "MED" }));
+        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INF", "ELE", "ABO", "MED" }));
         carreraComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -178,7 +179,7 @@ public class ABM extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(alumnosTable);
 
-        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "F" }));
         sexoComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
@@ -340,16 +341,17 @@ public class ABM extends javax.swing.JFrame {
         abrir();
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
-    private boolean abrir() throws HeadlessException {
+    private void abrir() throws HeadlessException {
         JFileChooser fileChooser = new JFileChooser();
         
         int ret = fileChooser.showOpenDialog(this);
         if (ret != JFileChooser.APPROVE_OPTION) {
-            return true;
+            return;
         }
         try
         {
-            dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
+            archivoFile = fileChooser.getSelectedFile();
+            dao = new AlumnoDAOTxt(archivoFile);
         }
         catch(FileNotFoundException ex)
         {
@@ -363,10 +365,8 @@ public class ABM extends javax.swing.JFrame {
         {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
-        seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
-        
-        
-        return false;
+        seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());
+
     }
 
 
@@ -376,42 +376,11 @@ public class ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_abrirButtonActionPerformed
 
     private void nuevoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoButtonActionPerformed
-        
-        try
-        {
-            if(dao.buscar(Integer.valueOf(dniTextField.getText()))!= null) {
-                JOptionPane.showMessageDialog(this, "duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                alumno = new Alumno();
-                
-                alumno.setFechaNac(new MiCalendar(Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
-                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.MONTH)),
-                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.YEAR))));
-                
-                alumno.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
-                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.MONTH)),
-                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.YEAR))));
-                dao.insertar(alumno);
-                modeloTabla.fireTableDataChanged();
-                mensajeLabel.setText("Alumno insertado.");
-                limpiarCampos();
-            }
-        }        
-        catch(Exception ex)
-        {
-            mensajeLabel.setText("Alumno NO insertado.");
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        limpiarCampos();
     }//GEN-LAST:event_nuevoButtonActionPerformed
 
     private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
         
-        try {
-            dao.eliminar(alumno);
-        } catch (Exception ex) {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_borrarButtonActionPerformed
 
     private void dniTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_dniTextFieldInputMethodTextChanged
@@ -446,7 +415,11 @@ public class ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_cantMatAprobTextFieldInputMethodTextChanged
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        // TODO add your handling code here:
+        seleccionarArchivoTextField.setText("");
+        archivoFile = null;
+        List<Alumno> lista2 = new ArrayList();
+        modeloTabla.setAlumnos(lista2);
+        limpiarCampos();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -454,7 +427,40 @@ public class ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
-        // TODO add your handling code here:
+        
+        try
+        {
+            if(dao.buscar(Integer.valueOf(dniTextField.getText()))!= null) {
+                JOptionPane.showMessageDialog(this, "duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                alumno = new Alumno();
+                alumno.setDni(Integer.valueOf(dniTextField.getText()));
+                alumno.setApyn(apynTextField.getText());
+                String aux = sexoComboBox.getSelectedItem().toString();
+                alumno.setSexo((char)aux.charAt(0));
+                alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
+                alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
+                alumno.setFechaNac(new MiCalendar(Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.MONTH)),
+                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.YEAR))));
+                
+                alumno.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.MONTH)),
+                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.YEAR))));
+                alumno.setCarrera(carreraComboBox.getSelectedItem().toString());
+                
+                dao.insertar(alumno);
+                modeloTabla.fireTableDataChanged();
+                mensajeLabel.setText("Alumno insertado.");
+                limpiarCampos();
+            }
+        }        
+        catch(Exception ex)
+        {
+            mensajeLabel.setText("Alumno NO insertado.");
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     /**
@@ -495,8 +501,7 @@ public class ABM extends javax.swing.JFrame {
     private Alumno alumno;
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
-    private boolean isFileChange = false;
-    private File archivo;
+    private File archivoFile;
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -527,6 +532,5 @@ public class ABM extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> sexoComboBox;
     private javax.swing.JLabel sexoLabel;
     // End of variables declaration//GEN-END:variables
-
 
 }
