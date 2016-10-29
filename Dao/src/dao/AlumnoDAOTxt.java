@@ -30,16 +30,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
     }
      
      
-    @Override
-    public void insertar(Alumno alu) throws Exception
-    {
-        if(existe(alu.getDni()))
-            throw new Exception("Clave " + alu.getDni() + " Duplicada.");
-         
-        archivoRAF.seek(archivoRAF.length());
-        archivoRAF.writeBytes(alu.toString() + System.lineSeparator());
 
-    }
  
     @Override
     public void actualizar(Alumno obj) throws IOException
@@ -136,8 +127,8 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
         archivoRAF.seek(0);
          
         String linea;
-        List<Alumno> alumnos = new ArrayList<>();
-        while((linea = archivoRAF.readLine()) != null && !"B".equals(linea.substring(56, 57)) )
+        //alumnos = new ArrayList<>();
+        while((linea = archivoRAF.readLine()) != null)
         {
             try
             {
@@ -154,7 +145,18 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
         return alumnos;
     }
      
+    @Override
+    public void insertar(Alumno alu) throws Exception
+    {
+        if(existe(alu.getDni()))
+            throw new Exception("Clave " + alu.getDni() + " Duplicada.");
+
+        archivoRAF.seek(archivoRAF.length());
+        alumnos.add(alu);
+        archivoRAF.writeBytes(System.lineSeparator() + alu.toString());
+    }
      
     private RandomAccessFile archivoRAF;
- 
+    private List<Alumno> alumnos = new ArrayList();
+    
 }
