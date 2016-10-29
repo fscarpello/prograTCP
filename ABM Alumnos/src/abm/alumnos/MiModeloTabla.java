@@ -41,6 +41,7 @@ public class MiModeloTabla extends AbstractTableModel
     {
         return 8;
     }
+    
      
      
     @Override

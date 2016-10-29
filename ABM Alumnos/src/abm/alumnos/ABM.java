@@ -12,10 +12,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import micalendar.FechaInvalidaException;
 import micalendar.MiCalendar;
 import persona.Alumno;
 
@@ -83,7 +86,30 @@ public class ABM extends javax.swing.JFrame {
             }
         });
 
+        dniTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                dniTextFieldInputMethodTextChanged(evt);
+            }
+        });
+
+        apynTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                apynTextFieldInputMethodTextChanged(evt);
+            }
+        });
+
         carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INF", "ELE", "ABO", "MED" }));
+        carreraComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                carreraComboBoxInputMethodTextChanged(evt);
+            }
+        });
 
         dniLabel.setText("DNI");
 
@@ -132,6 +158,29 @@ public class ABM extends javax.swing.JFrame {
         jScrollPane1.setViewportView(alumnosTable);
 
         sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        sexoComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                sexoComboBoxInputMethodTextChanged(evt);
+            }
+        });
+
+        promedioTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                promedioTextFieldInputMethodTextChanged(evt);
+            }
+        });
+
+        cantMatAprobTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                cantMatAprobTextFieldInputMethodTextChanged(evt);
+            }
+        });
 
         sexoLabel.setText("Sexo");
 
@@ -265,13 +314,10 @@ public class ABM extends javax.swing.JFrame {
         apynTextField.setText("");
         promedioTextField.setText("");
         cantMatAprobTextField.setText("");
-        
-        fechaNacDateChooser.cleanup();
-        fechaIngDateChooser.cleanup();
-        
+        fechaNacDateChooser.setCalendar(null);
+        fechaIngDateChooser.setCalendar(null);
         sexoComboBox.setSelectedItem("M");
         carreraComboBox.setSelectedItem("INF");
-        
     }
     
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
@@ -280,6 +326,7 @@ public class ABM extends javax.swing.JFrame {
 
     private boolean abrir() throws HeadlessException {
         JFileChooser fileChooser = new JFileChooser();
+        
         int ret = fileChooser.showOpenDialog(this);
         if (ret != JFileChooser.APPROVE_OPTION) {
             return true;
@@ -302,6 +349,7 @@ public class ABM extends javax.swing.JFrame {
         }
         seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         
+        
         return false;
     }
 
@@ -319,17 +367,17 @@ public class ABM extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
-                /*alumno.setDni(Integer.valueOf(dniTextField.getText()));
-                alumno.setApyn(apynTextField.getText());
-                alumno.setFechaNac((MiCalendar) fechaNacDateChooser.getCalendar());
-                alumno.setSexo((char) sexoComboBox.getSelectedItem());
-                alumno.setFechaIngr((MiCalendar) fechaIngDateChooser.getCalendar());
-                alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
-                alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
-                alumno.setCarrera(carreraComboBox.getSelectedItem().toString());*/
+                alumno = new Alumno();
                 
+                alumno.setFechaNac(new MiCalendar(Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.MONTH)),
+                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.YEAR))));
+                
+                alumno.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.MONTH)),
+                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.YEAR))));
                 dao.insertar(alumno);
-                modeloTabla.setAlumnos(dao.getTodos());
+                modeloTabla.fireTableDataChanged();
                 mensajeLabel.setText("Alumno insertado.");
                 limpiarCampos();
             }
@@ -343,12 +391,42 @@ public class ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_nuevoButtonActionPerformed
 
     private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
+        
         try {
             dao.eliminar(alumno);
         } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_borrarButtonActionPerformed
+
+    private void dniTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_dniTextFieldInputMethodTextChanged
+        try {
+            alumno.setDni(Integer.valueOf(dniTextField.getText()));
+        } catch (Exception ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_dniTextFieldInputMethodTextChanged
+
+    private void apynTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_apynTextFieldInputMethodTextChanged
+        alumno.setApyn(apynTextField.getText());
+    }//GEN-LAST:event_apynTextFieldInputMethodTextChanged
+
+    private void carreraComboBoxInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_carreraComboBoxInputMethodTextChanged
+        alumno.setCarrera(carreraComboBox.getSelectedItem().toString());
+    }//GEN-LAST:event_carreraComboBoxInputMethodTextChanged
+
+    private void sexoComboBoxInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_sexoComboBoxInputMethodTextChanged
+        String aux = sexoComboBox.getSelectedItem().toString();
+        alumno.setSexo((char)aux.charAt(0));
+    }//GEN-LAST:event_sexoComboBoxInputMethodTextChanged
+
+    private void promedioTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_promedioTextFieldInputMethodTextChanged
+        alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
+    }//GEN-LAST:event_promedioTextFieldInputMethodTextChanged
+
+    private void cantMatAprobTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cantMatAprobTextFieldInputMethodTextChanged
+        alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
+    }//GEN-LAST:event_cantMatAprobTextFieldInputMethodTextChanged
 
     /**
      * @param args the command line arguments
@@ -389,6 +467,7 @@ public class ABM extends javax.swing.JFrame {
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
     private boolean isFileChange = false;
+    private File archivo;
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
