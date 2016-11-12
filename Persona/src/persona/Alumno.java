@@ -71,14 +71,6 @@ public class Alumno extends Persona
                carrera;
     }
      
-     
-     
-     
-         
-    private int cantMatAprob;
-    private String carrera;
-    private MiCalendar fechaIngr;
-    private double promedio;
  
     public void setFromTxt(String linea) throws Exception
     {
@@ -104,4 +96,10 @@ public class Alumno extends Persona
         
         setCarrera(campos[7]);
     }
+    
+    
+    private int cantMatAprob;
+    private String carrera;
+    private MiCalendar fechaIngr;
+    private double promedio;
 }

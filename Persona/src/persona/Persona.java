@@ -93,8 +93,8 @@ public class Persona
     {
         return String.format("%08d", dni) + "\t" + 
                String.format("%-30s", apyn) + "\t" + 
-                fechaNac.toString() + "\t" + 
-                sexo;
+               fechaNac.toString() + "\t" + 
+               sexo;
     }
      
      
