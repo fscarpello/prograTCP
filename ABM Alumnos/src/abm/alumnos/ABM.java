@@ -5,16 +5,13 @@
  */
 package abm.alumnos;
 
-import com.sun.prism.paint.Color;
 import dao.AlumnoDAOTxt;
 import dao.DAO;
-import java.awt.HeadlessException;
 import static java.awt.Color.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
