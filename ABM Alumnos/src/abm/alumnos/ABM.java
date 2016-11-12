@@ -506,14 +506,14 @@ public class ABM extends javax.swing.JFrame {
             alumno = new Alumno();
             alumno.setDni(Integer.valueOf(dniTextField.getText()));
 
-            aux = dao.buscar(alumno.getDni());
+            alumno2 = dao.buscar(alumno.getDni());
 
-             if(aux == null)
+             if(alumno2 == null)
              {
                  JOptionPane.showMessageDialog(this, "No se encontro el Alumno con DNI " + String.valueOf(alumno.getDni()), "Error", JOptionPane.ERROR_MESSAGE);
                  return;
              }
-            alumno = aux;
+            alumno = alumno2;
             obtenerValores();
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
@@ -730,7 +730,7 @@ public class ABM extends javax.swing.JFrame {
     }
     
     private Alumno alumno;
-    private Alumno aux;
+    private Alumno alumno2;
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
     private File archivoFile;
