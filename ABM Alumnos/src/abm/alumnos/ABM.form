@@ -3,10 +3,19 @@
 <Form version="1.4" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="0"/>
+    <Property name="title" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+      <Connection code="&quot;Gesti&#xf3;n de Alumnos&quot;" type="code"/>
+    </Property>
+    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+      <Color id="Cursor Por defecto"/>
+    </Property>
+    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="40" green="40" id="darkGray" palette="1" red="40" type="palette"/>
+    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <Events>
     <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
@@ -26,10 +35,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="717" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="seleccionarArchivoTextField" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -37,60 +46,66 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="dniTextField" alignment="0" min="-2" pref="88" max="-2" attributes="0"/>
                                   <Component id="dniLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="sexoComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="sexoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="dniMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="promedioLabel" max="32767" attributes="0"/>
-                                          <Component id="promedioTextField" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cantMatAprobTextField" min="-2" pref="126" max="-2" attributes="0"/>
-                                          <Component id="cantMatAprobjLabel" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
                                   <Component id="apynTextField" alignment="0" min="-2" pref="212" max="-2" attributes="0"/>
                                   <Component id="apynLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="fecNacLabel" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fechaIngresoLabel" min="-2" max="-2" attributes="0"/>
-                                  <Component id="fechaNacDateChooser" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="fechaIngDateChooser" max="32767" attributes="0"/>
+                                  <Component id="apynMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="promedioLabel" max="32767" attributes="0"/>
+                                              <Component id="promedioTextField" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Component id="promedioMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="cantMatAprobjLabel" min="-2" max="-2" attributes="0"/>
+                                          <Component id="cantMatAprobTextField" min="-2" pref="126" max="-2" attributes="0"/>
+                                          <Component id="cantMatAprobMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
                           </Group>
-                          <Component id="mensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="estadoMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="carreraComboBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="fecIngMensajeLabel" min="-2" max="-2" attributes="0"/>
+                          <Component id="fechaIngDateChooser" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Component id="fechaNacDateChooser" min="-2" pref="99" max="-2" attributes="0"/>
+                          <Component id="fechaIngresoLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="fecNacLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="fecNacMensajeLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="carreraComboBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
                                   <Component id="carreraLabel" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="abrirButton" pref="90" max="32767" attributes="0"/>
-                                  <Component id="nuevoButton" pref="90" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="cancelarButton" alignment="1" pref="90" max="32767" attributes="0"/>
-                                  <Component id="borrarButton" alignment="1" max="32767" attributes="0"/>
-                                  <Component id="guardarButton" alignment="1" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="estadoComboBox" min="-2" max="-2" attributes="0"/>
+                          <Component id="estadoLabel" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="borrarButton" alignment="1" max="32767" attributes="0"/>
+                          <Component id="guardarButton" alignment="1" max="32767" attributes="0"/>
+                          <Component id="nuevoButton" alignment="1" pref="90" max="32767" attributes="0"/>
+                          <Component id="abrirButton" alignment="1" pref="90" max="32767" attributes="0"/>
+                          <Component id="cancelarButton" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -106,9 +121,9 @@
                   <Component id="seleccionarArchivoTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="seleccionarArchivoButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="dniLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="apynLabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -117,29 +132,45 @@
                       </Group>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="fechaNacDateChooser" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="dniTextField" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="apynTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="fechaNacDateChooser" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="dniTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="apynTextField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="carreraComboBox" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="15" max="32767" attributes="0"/>
+                              <Component id="dniMensajeLabel" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="carreraComboBox" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              <Component id="apynMensajeLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="fecNacMensajeLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="nuevoButton" min="-2" pref="24" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="abrirButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="nuevoButton" min="-2" pref="24" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="guardarButton" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="sexoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="promedioLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cantMatAprobjLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="fechaIngresoLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="fechaIngresoLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="cantMatAprobjLabel" min="-2" max="-2" attributes="0"/>
+                  <Component id="estadoLabel" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -156,13 +187,24 @@
                               <Component id="promedioTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="cantMatAprobTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Component id="estadoComboBox" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="mensajeLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="promedioMensajeLabel" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cantMatAprobMensajeLabel" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="estadoMensajeLabel" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="fecIngMensajeLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="256" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="263" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -174,6 +216,9 @@
         <Property name="editable" type="boolean" value="false"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="ABM_seleccionarArchivoTextField"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="seleccionarArchivoButton">
       <Properties>
@@ -184,13 +229,22 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="dniTextField">
+      <Properties>
+        <Property name="columns" type="int" value="8"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="dniTextFieldInputMethodTextChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="dniTextFieldFocusLost"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="dniTextFieldKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="apynTextField">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="apynTextFieldInputMethodTextChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="apynTextFieldFocusLost"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="apynTextFieldKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="carreraComboBox">
@@ -203,10 +257,8 @@
             <StringItem index="3" value="MED"/>
           </StringArray>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="carreraComboBoxInputMethodTextChanged"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
@@ -234,6 +286,7 @@
     <Component class="javax.swing.JButton" name="nuevoButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nuevo"/>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[71, 23]"/>
         </Property>
@@ -251,6 +304,7 @@
     <Component class="javax.swing.JButton" name="abrirButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Abrir"/>
+        <Property name="enabled" type="boolean" value="false"/>
         <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
           <Dimension value="[71, 23]"/>
         </Property>
@@ -268,6 +322,7 @@
     <Component class="javax.swing.JButton" name="guardarButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="guardarButtonActionPerformed"/>
@@ -276,6 +331,7 @@
     <Component class="javax.swing.JButton" name="borrarButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Borrar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="borrarButtonActionPerformed"/>
@@ -284,6 +340,7 @@
     <Component class="javax.swing.JButton" name="cancelarButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelarButtonActionPerformed"/>
@@ -315,22 +372,28 @@
             <StringItem index="1" value="F"/>
           </StringArray>
         </Property>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="sexoComboBoxInputMethodTextChanged"/>
-      </Events>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="promedioTextField">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="promedioTextFieldInputMethodTextChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="promedioTextFieldFocusLost"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="promedioTextFieldKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="cantMatAprobTextField">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
       <Events>
-        <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="cantMatAprobTextFieldInputMethodTextChanged"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="cantMatAprobTextFieldFocusLost"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cantMatAprobTextFieldKeyTyped"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="sexoLabel">
@@ -354,10 +417,102 @@
       </Properties>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="fechaNacDateChooser">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fechaNacDateChooserFocusLost"/>
+      </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="fechaIngDateChooser">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fechaIngDateChooserFocusLost"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="mensajeLabel">
+    <Component class="javax.swing.JLabel" name="estadoMensajeLabel">
+    </Component>
+    <Component class="javax.swing.JLabel" name="apynMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="fecNacMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="promedioMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="cantMatAprobMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="fecIngMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="dniMensajeLabel">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="9" style="0"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="0" green="0" red="ff" type="rgb"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="estadoComboBox">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="2">
+            <StringItem index="0" value="A"/>
+            <StringItem index="1" value="B"/>
+          </StringArray>
+        </Property>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="estadoLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Estado"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

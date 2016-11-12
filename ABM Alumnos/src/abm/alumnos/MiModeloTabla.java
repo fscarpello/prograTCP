@@ -70,5 +70,5 @@ public class MiModeloTabla extends AbstractTableModel
 
      
     private List<Alumno> alumnos;
-    private static final String[] nomColumnas = {"DNI", "Apellido y Nombre", "Fecha de Nacimiento", "Sexo", "Fecha Ingreso", "Cantidad de Materias Aprobadas", "Promedio", "Carrera"};
+    private static final String[] nomColumnas = {"DNI", "Apellido y Nombre", "Fecha de Nacimiento", "Sexo", "Fecha de Ingreso", "Cantidad de Materias Aprobadas", "Promedio", "Carrera"};
 }

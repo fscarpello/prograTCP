@@ -5,13 +5,13 @@
  */
 package abm.alumnos;
 
+import com.sun.prism.paint.Color;
 import dao.AlumnoDAOTxt;
 import dao.DAO;
 import java.awt.HeadlessException;
+import static java.awt.Color.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.border.LineBorder;
 import micalendar.FechaInvalidaException;
 import micalendar.MiCalendar;
 import persona.Alumno;
@@ -52,7 +53,7 @@ public class ABM extends javax.swing.JFrame {
         seleccionarArchivoButton = new javax.swing.JButton();
         dniTextField = new javax.swing.JTextField();
         apynTextField = new javax.swing.JTextField();
-        carreraComboBox = new javax.swing.JComboBox<String>();
+        carreraComboBox = new javax.swing.JComboBox<>();
         dniLabel = new javax.swing.JLabel();
         apynLabel = new javax.swing.JLabel();
         fecNacLabel = new javax.swing.JLabel();
@@ -64,7 +65,7 @@ public class ABM extends javax.swing.JFrame {
         cancelarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         alumnosTable = new javax.swing.JTable();
-        sexoComboBox = new javax.swing.JComboBox<String>();
+        sexoComboBox = new javax.swing.JComboBox<>();
         promedioTextField = new javax.swing.JTextField();
         cantMatAprobTextField = new javax.swing.JTextField();
         sexoLabel = new javax.swing.JLabel();
@@ -73,9 +74,20 @@ public class ABM extends javax.swing.JFrame {
         fechaIngresoLabel = new javax.swing.JLabel();
         fechaNacDateChooser = new com.toedter.calendar.JDateChooser();
         fechaIngDateChooser = new com.toedter.calendar.JDateChooser();
-        mensajeLabel = new javax.swing.JLabel();
+        estadoMensajeLabel = new javax.swing.JLabel();
+        apynMensajeLabel = new javax.swing.JLabel();
+        fecNacMensajeLabel = new javax.swing.JLabel();
+        promedioMensajeLabel = new javax.swing.JLabel();
+        cantMatAprobMensajeLabel = new javax.swing.JLabel();
+        fecIngMensajeLabel = new javax.swing.JLabel();
+        dniMensajeLabel = new javax.swing.JLabel();
+        estadoComboBox = new javax.swing.JComboBox<>();
+        estadoLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Gestión de Alumnos");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.darkGray);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -92,30 +104,33 @@ public class ABM extends javax.swing.JFrame {
             }
         });
 
-        dniTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+        dniTextField.setColumns(8);
+        dniTextField.setEnabled(false);
+        dniTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                dniTextFieldFocusLost(evt);
             }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                dniTextFieldInputMethodTextChanged(evt);
+        });
+        dniTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                dniTextFieldKeyTyped(evt);
             }
         });
 
-        apynTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+        apynTextField.setEnabled(false);
+        apynTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                apynTextFieldFocusLost(evt);
             }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                apynTextFieldInputMethodTextChanged(evt);
+        });
+        apynTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                apynTextFieldKeyTyped(evt);
             }
         });
 
-        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INF", "ELE", "ABO", "MED" }));
-        carreraComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                carreraComboBoxInputMethodTextChanged(evt);
-            }
-        });
+        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INF", "ELE", "ABO", "MED" }));
+        carreraComboBox.setEnabled(false);
 
         dniLabel.setText("DNI");
 
@@ -126,6 +141,7 @@ public class ABM extends javax.swing.JFrame {
         carreraLabel.setText("Carrera");
 
         nuevoButton.setText("Nuevo");
+        nuevoButton.setEnabled(false);
         nuevoButton.setMaximumSize(new java.awt.Dimension(71, 23));
         nuevoButton.setMinimumSize(new java.awt.Dimension(71, 23));
         nuevoButton.setPreferredSize(new java.awt.Dimension(71, 23));
@@ -136,6 +152,7 @@ public class ABM extends javax.swing.JFrame {
         });
 
         abrirButton.setText("Abrir");
+        abrirButton.setEnabled(false);
         abrirButton.setMaximumSize(new java.awt.Dimension(71, 23));
         abrirButton.setMinimumSize(new java.awt.Dimension(71, 23));
         abrirButton.setPreferredSize(new java.awt.Dimension(71, 23));
@@ -146,6 +163,7 @@ public class ABM extends javax.swing.JFrame {
         });
 
         guardarButton.setText("Guardar");
+        guardarButton.setEnabled(false);
         guardarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 guardarButtonActionPerformed(evt);
@@ -153,6 +171,7 @@ public class ABM extends javax.swing.JFrame {
         });
 
         borrarButton.setText("Borrar");
+        borrarButton.setEnabled(false);
         borrarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 borrarButtonActionPerformed(evt);
@@ -160,6 +179,7 @@ public class ABM extends javax.swing.JFrame {
         });
 
         cancelarButton.setText("Cancelar");
+        cancelarButton.setEnabled(false);
         cancelarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelarButtonActionPerformed(evt);
@@ -179,28 +199,30 @@ public class ABM extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(alumnosTable);
 
-        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "F" }));
-        sexoComboBox.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        sexoComboBox.setEnabled(false);
+
+        promedioTextField.setEnabled(false);
+        promedioTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                promedioTextFieldFocusLost(evt);
             }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                sexoComboBoxInputMethodTextChanged(evt);
+        });
+        promedioTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                promedioTextFieldKeyTyped(evt);
             }
         });
 
-        promedioTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                promedioTextFieldInputMethodTextChanged(evt);
+        cantMatAprobTextField.setEnabled(false);
+        cantMatAprobTextField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                cantMatAprobTextFieldFocusLost(evt);
             }
         });
-
-        cantMatAprobTextField.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-                cantMatAprobTextFieldInputMethodTextChanged(evt);
+        cantMatAprobTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cantMatAprobTextFieldKeyTyped(evt);
             }
         });
 
@@ -212,6 +234,44 @@ public class ABM extends javax.swing.JFrame {
 
         fechaIngresoLabel.setText("Fecha de Ingreso");
 
+        fechaNacDateChooser.setEnabled(false);
+        fechaNacDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fechaNacDateChooserFocusLost(evt);
+            }
+        });
+
+        fechaIngDateChooser.setEnabled(false);
+        fechaIngDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                fechaIngDateChooserFocusLost(evt);
+            }
+        });
+
+        apynMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        apynMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        fecNacMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        fecNacMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        promedioMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        promedioMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        cantMatAprobMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        cantMatAprobMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        fecIngMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        fecIngMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+        fecIngMensajeLabel.setToolTipText("");
+
+        dniMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
+        dniMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
+
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
+        estadoComboBox.setEnabled(false);
+
+        estadoLabel.setText("Estado");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -219,7 +279,7 @@ public class ABM extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 717, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(seleccionarArchivoTextField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -231,42 +291,49 @@ public class ABM extends javax.swing.JFrame {
                                     .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dniLabel)
                                     .addComponent(sexoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(sexoLabel))
+                                    .addComponent(sexoLabel)
+                                    .addComponent(dniMensajeLabel))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(promedioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(promedioTextField))
-                                        .addGap(38, 38, 38)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cantMatAprobjLabel)))
                                     .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(apynLabel))
-                                .addGap(26, 26, 26)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fecNacLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fechaIngresoLabel)
-                                    .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(fechaIngDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(mensajeLabel))
-                        .addGap(18, 18, 18)
+                                    .addComponent(apynLabel)
+                                    .addComponent(apynMensajeLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addComponent(promedioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(promedioTextField))
+                                            .addComponent(promedioMensajeLabel))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cantMatAprobjLabel)
+                                            .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cantMatAprobMensajeLabel)))))
+                            .addComponent(estadoMensajeLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(carreraLabel))
-                                .addGap(42, 42, 42)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(abrirButton, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                    .addComponent(nuevoButton, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(88, 88, 88)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cancelarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                                    .addComponent(borrarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(guardarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                            .addComponent(fecIngMensajeLabel)
+                            .addComponent(fechaIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaIngresoLabel)
+                            .addComponent(fecNacLabel)
+                            .addComponent(fecNacMensajeLabel))
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(carreraLabel)
+                                    .addGap(48, 48, 48)))
+                            .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(estadoLabel))
+                        .addGap(39, 39, 39)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(borrarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(guardarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nuevoButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(abrirButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                            .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -276,9 +343,9 @@ public class ABM extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seleccionarArchivoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(seleccionarArchivoButton))
-                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dniLabel)
                             .addComponent(apynLabel)
@@ -286,23 +353,35 @@ public class ABM extends javax.swing.JFrame {
                             .addComponent(carreraLabel))
                         .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(carreraComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                .addComponent(dniMensajeLabel))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(apynMensajeLabel))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(fecNacMensajeLabel)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(nuevoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(abrirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(abrirButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(6, 6, 6)
+                        .addComponent(nuevoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(guardarButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(sexoLabel)
-                        .addComponent(promedioLabel)
-                        .addComponent(cantMatAprobjLabel)
-                        .addComponent(fechaIngresoLabel)))
+                        .addComponent(promedioLabel))
+                    .addComponent(fechaIngresoLabel)
+                    .addComponent(cantMatAprobjLabel)
+                    .addComponent(estadoLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -315,15 +394,24 @@ public class ABM extends javax.swing.JFrame {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(sexoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(promedioTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(37, 37, 37)
-                        .addComponent(mensajeLabel)))
+                                .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(promedioMensajeLabel)
+                                    .addComponent(cantMatAprobMensajeLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(estadoMensajeLabel))
+                            .addComponent(fecIngMensajeLabel))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void limpiarCampos() {
@@ -335,13 +423,58 @@ public class ABM extends javax.swing.JFrame {
         fechaIngDateChooser.setCalendar(null);
         sexoComboBox.setSelectedItem("M");
         carreraComboBox.setSelectedItem("INF");
+        estadoComboBox.setSelectedItem("A");
+        
+        apynMensajeLabel.setText("");
+        apynTextField.setBorder(new LineBorder(GRAY));
+        
+        dniMensajeLabel.setText("");
+        dniTextField.setBorder(new LineBorder(GRAY));
+        
+        promedioMensajeLabel.setText("");            
+        promedioTextField.setBorder(new LineBorder(GRAY));
+        
+        cantMatAprobMensajeLabel.setText("");
+        cantMatAprobTextField.setBorder(new LineBorder(GRAY));
+
+        estadoMensajeLabel.setText("");
+    }
+    
+    private void activarCamposYBotones() {
+        dniTextField.setEnabled(true);
+        apynTextField.setEnabled(true);
+        sexoComboBox.setEnabled(true);
+        carreraComboBox.setEnabled(true);
+        estadoComboBox.setEnabled(true);
+        fechaNacDateChooser.setEnabled(true);
+        fechaIngDateChooser.setEnabled(true);
+        promedioTextField.setEnabled(true);
+        cantMatAprobTextField.setEnabled(true);
+        nuevoButton.setEnabled(true);
+        guardarButton.setEnabled(true);
+        abrirButton.setEnabled(true);
+        cancelarButton.setEnabled(true);
+        alumnosTable.setEnabled(true);
+    }
+     
+    private void desactivarCamposYBotones() {
+        dniTextField.setEnabled(false);
+        apynTextField.setEnabled(false);
+        sexoComboBox.setEnabled(false);
+        carreraComboBox.setEnabled(false);
+        estadoComboBox.setEnabled(false);
+        fechaNacDateChooser.setEnabled(false);
+        fechaIngDateChooser.setEnabled(false);
+        promedioTextField.setEnabled(false);
+        cantMatAprobTextField.setEnabled(false);
+        nuevoButton.setEnabled(false);
+        guardarButton.setEnabled(false);
+        abrirButton.setEnabled(false);
+        cancelarButton.setEnabled(false);
+        alumnosTable.setEnabled(false);
     }
     
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
-        abrir();
-    }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
-
-    private void abrir() throws HeadlessException {
         JFileChooser fileChooser = new JFileChooser();
         
         int ret = fileChooser.showOpenDialog(this);
@@ -350,8 +483,7 @@ public class ABM extends javax.swing.JFrame {
         }
         try
         {
-            archivoFile = fileChooser.getSelectedFile();
-            dao = new AlumnoDAOTxt(archivoFile);
+            dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
         }
         catch(FileNotFoundException ex)
         {
@@ -360,65 +492,116 @@ public class ABM extends javax.swing.JFrame {
         try
         {
             modeloTabla.setAlumnos(dao.getTodos());
+            limpiarCampos();
         }
         catch (Exception ex)
         {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
-        seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());
-
-    }
+        activarCamposYBotones();
+        seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
+    }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
 
     
     private void abrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirButtonActionPerformed
-        abrir();
+        try {
+            alumno = new Alumno();
+            alumno.setDni(Integer.valueOf(dniTextField.getText()));
+
+            aux = dao.buscar(alumno.getDni());
+
+             if(aux == null)
+             {
+                 JOptionPane.showMessageDialog(this, "No se encontro el Alumno con DNI " + String.valueOf(alumno.getDni()), "Error", JOptionPane.ERROR_MESSAGE);
+                 return;
+             }
+            alumno = aux;
+            obtenerValores();
+            estadoMensajeLabel.setForeground(GREEN);
+            estadoMensajeLabel.setText("Alumno encontrado");
+        } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al recuperar información del archivo.\nAlumno no encontrado.\n(" + ex.getMessage() + ")", "Error", JOptionPane.ERROR_MESSAGE);
+        estadoMensajeLabel.setForeground(RED);
+        estadoMensajeLabel.setText("Alumno no encontrado");
+        } 
     }//GEN-LAST:event_abrirButtonActionPerformed
 
+        private void obtenerValores() throws Exception {
+            dniTextField.setText(String.valueOf(alumno.getDni()));
+            apynTextField.setText(alumno.getApyn());
+            sexoComboBox.setSelectedItem(String.valueOf(alumno.getSexo()));
+            promedioTextField.setText(String.valueOf(alumno.getPromedio()).replace('.', ','));
+            cantMatAprobTextField.setText(String.valueOf(alumno.getCantMatAprob()));
+            fechaNacDateChooser.setCalendar(alumno.getFechaNac());
+            fechaIngDateChooser.setCalendar(alumno.getFechaIngr());
+            carreraComboBox.setSelectedItem(alumno.getCarrera());
+    }
+
+    
+    private void datosAlumno() throws Exception, FechaInvalidaException, NumberFormatException {
+        alumno.setDni(Integer.valueOf(dniTextField.getText()));
+        alumno.setApyn(apynTextField.getText());
+        String aux = sexoComboBox.getSelectedItem().toString();
+        alumno.setSexo((char)aux.charAt(0));
+        alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
+        alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
+        alumno.setFechaNac(new MiCalendar(Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                          Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.MONTH)+1),
+                                          Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.YEAR))));
+        
+        alumno.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
+                                           Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.MONTH)+1),
+                                           Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.YEAR))));
+        alumno.setCarrera(carreraComboBox.getSelectedItem().toString());
+    }
+
     private void nuevoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoButtonActionPerformed
-        limpiarCampos();
+        try
+        {
+            if(dao.buscar(Integer.valueOf(dniTextField.getText()))!= null) {
+                JOptionPane.showMessageDialog(this, "El DNI " + dniTextField.getText() + " ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            else {
+                if(!dniTextField.getText().isEmpty() && !apynTextField.getText().isEmpty()
+                                                     && !promedioTextField.getText().isEmpty()
+                                                     && !cantMatAprobTextField.getText().isEmpty()
+                                                     && !fechaNacDateChooser.getDate().toString().isEmpty()
+                                                     && !fechaIngDateChooser.getDate().toString().isEmpty()){
+                    alumno = new Alumno();
+                    datosAlumno();
+                    dao.insertar(alumno);
+                    modeloTabla.fireTableDataChanged();
+                    estadoMensajeLabel.setForeground(GREEN);
+                    estadoMensajeLabel.setText("Alumno insertado.");
+                    limpiarCampos();
+                }else{
+                    estadoMensajeLabel.setForeground(RED);
+                    estadoMensajeLabel.setText("Complete todos los campos.");
+                }
+            }
+        }        
+        catch(NumberFormatException ex2){
+            estadoMensajeLabel.setForeground(RED);
+            estadoMensajeLabel.setText("Alumno NO insertado.");
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex2);
+        }
+        catch(FechaInvalidaException ex3){
+            estadoMensajeLabel.setForeground(RED);
+            estadoMensajeLabel.setText("Alumno NO insertado.");
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex3);
+        } catch (Exception ex) {
+            estadoMensajeLabel.setForeground(RED);
+            estadoMensajeLabel.setText("Alumno NO insertado.");
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_nuevoButtonActionPerformed
 
     private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
         
     }//GEN-LAST:event_borrarButtonActionPerformed
 
-    private void dniTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_dniTextFieldInputMethodTextChanged
-        try {
-            alumno.setDni(Integer.valueOf(dniTextField.getText()));
-        } catch (NumberFormatException ex) {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_dniTextFieldInputMethodTextChanged
-
-    private void apynTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_apynTextFieldInputMethodTextChanged
-        alumno.setApyn(apynTextField.getText());
-    }//GEN-LAST:event_apynTextFieldInputMethodTextChanged
-
-    private void carreraComboBoxInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_carreraComboBoxInputMethodTextChanged
-        alumno.setCarrera(carreraComboBox.getSelectedItem().toString());
-    }//GEN-LAST:event_carreraComboBoxInputMethodTextChanged
-
-    private void sexoComboBoxInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_sexoComboBoxInputMethodTextChanged
-        String aux = sexoComboBox.getSelectedItem().toString();
-        alumno.setSexo((char)aux.charAt(0));
-    }//GEN-LAST:event_sexoComboBoxInputMethodTextChanged
-
-    private void promedioTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_promedioTextFieldInputMethodTextChanged
-        alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
-    }//GEN-LAST:event_promedioTextFieldInputMethodTextChanged
-
-    private void cantMatAprobTextFieldInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_cantMatAprobTextFieldInputMethodTextChanged
-        alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
-    }//GEN-LAST:event_cantMatAprobTextFieldInputMethodTextChanged
-
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        seleccionarArchivoTextField.setText("");
-        archivoFile = null;
-        List<Alumno> lista2 = new ArrayList();
-        modeloTabla.setAlumnos(lista2);
         limpiarCampos();
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
@@ -427,41 +610,92 @@ public class ABM extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
-        
-        try
-        {
-            if(dao.buscar(Integer.valueOf(dniTextField.getText()))!= null) {
-                JOptionPane.showMessageDialog(this, "duplicado.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            else {
-                alumno = new Alumno();
-                alumno.setDni(Integer.valueOf(dniTextField.getText()));
-                alumno.setApyn(apynTextField.getText());
-                String aux = sexoComboBox.getSelectedItem().toString();
-                alumno.setSexo((char)aux.charAt(0));
-                alumno.setPromedio(Double.valueOf(promedioTextField.getText().replace(',', '.')));
-                alumno.setCantMatAprob(Integer.valueOf(cantMatAprobTextField.getText()));
-                alumno.setFechaNac(new MiCalendar(Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
-                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.MONTH)),
-                                                  Integer.valueOf(fechaNacDateChooser.getCalendar().get(Calendar.YEAR))));
-                
-                alumno.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.DAY_OF_MONTH)),
-                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.MONTH)),
-                                                   Integer.valueOf(fechaIngDateChooser.getCalendar().get(Calendar.YEAR))));
-                alumno.setCarrera(carreraComboBox.getSelectedItem().toString());
-                
-                dao.insertar(alumno);
-                modeloTabla.fireTableDataChanged();
-                mensajeLabel.setText("Alumno insertado.");
-                limpiarCampos();
-            }
-        }        
-        catch(Exception ex)
-        {
-            mensajeLabel.setText("Alumno NO insertado.");
+        try {
+            alumno = new Alumno();
+            datosAlumno();
+            if(estadoComboBox.getSelectedItem().equals("A"))
+                dao.actualizar(alumno);
+            if(estadoComboBox.getSelectedItem().equals("B"))
+                dao.darDeBaja(alumno);
+            modeloTabla.setAlumnos(new ArrayList<Alumno>());
+            modeloTabla.setAlumnos(dao.getTodos());
+            estadoMensajeLabel.setForeground(GREEN);
+            estadoMensajeLabel.setText("Alumno actualizado.");
+        } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            estadoMensajeLabel.setForeground(RED);
+            estadoMensajeLabel.setText("Alumno NO actualizado.");
         }
     }//GEN-LAST:event_guardarButtonActionPerformed
+
+    private void dniTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_dniTextFieldFocusLost
+        if(dniTextField.getText().isEmpty()){
+            dniMensajeLabel.setText("Ingrese DNI.");
+            dniTextField.setBorder(new LineBorder(RED));
+        } else{
+            dniMensajeLabel.setText("");
+            dniTextField.setBorder(new LineBorder(GRAY));
+        }
+    }//GEN-LAST:event_dniTextFieldFocusLost
+
+    private void dniTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dniTextFieldKeyTyped
+        if (dniTextField.getText().length() >= 8 || Character.isDigit(evt.getKeyChar()) != true)
+            evt.consume();
+    }//GEN-LAST:event_dniTextFieldKeyTyped
+
+    private void apynTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_apynTextFieldKeyTyped
+        if (apynTextField.getText().length() >= 30 || Character.isDigit(evt.getKeyChar()))
+            evt.consume();
+    }//GEN-LAST:event_apynTextFieldKeyTyped
+
+    private void promedioTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_promedioTextFieldKeyTyped
+        if (promedioTextField.getText().length() >= 5 || Character.isLetter(evt.getKeyChar()) == true)
+            evt.consume();
+    }//GEN-LAST:event_promedioTextFieldKeyTyped
+
+    private void cantMatAprobTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cantMatAprobTextFieldKeyTyped
+        if (cantMatAprobTextField.getText().length() >= 2 || Character.isDigit(evt.getKeyChar()) != true)
+            evt.consume();
+    }//GEN-LAST:event_cantMatAprobTextFieldKeyTyped
+
+    private void apynTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_apynTextFieldFocusLost
+        if(apynTextField.getText().isEmpty()){
+            apynMensajeLabel.setText("Ingrese Apellido y Nombre.");
+            apynTextField.setBorder(new LineBorder(RED));
+        }else {
+            apynMensajeLabel.setText("");
+            apynTextField.setBorder(new LineBorder(GRAY));        
+        }
+
+    }//GEN-LAST:event_apynTextFieldFocusLost
+
+    private void fechaNacDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaNacDateChooserFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaNacDateChooserFocusLost
+
+    private void promedioTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_promedioTextFieldFocusLost
+        if(promedioTextField.getText().isEmpty()){
+            promedioMensajeLabel.setText("Ingrese Promedio");  
+            promedioTextField.setBorder(new LineBorder(RED));
+        }else{
+            promedioMensajeLabel.setText("");            
+            promedioTextField.setBorder(new LineBorder(GRAY));
+        }
+    }//GEN-LAST:event_promedioTextFieldFocusLost
+
+    private void cantMatAprobTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_cantMatAprobTextFieldFocusLost
+        if(cantMatAprobTextField.getText().isEmpty()){
+            cantMatAprobMensajeLabel.setText("Complete este campo.");  
+            cantMatAprobTextField.setBorder(new LineBorder(RED));
+        }else{
+            cantMatAprobMensajeLabel.setText("");
+            cantMatAprobTextField.setBorder(new LineBorder(GRAY));
+        }
+    }//GEN-LAST:event_cantMatAprobTextFieldFocusLost
+
+    private void fechaIngDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaIngDateChooserFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaIngDateChooserFocusLost
 
     /**
      * @param args the command line arguments
@@ -474,7 +708,7 @@ public class ABM extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Metal".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -499,6 +733,7 @@ public class ABM extends javax.swing.JFrame {
     }
     
     private Alumno alumno;
+    private Alumno aux;
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
     private File archivoFile;
@@ -508,29 +743,39 @@ public class ABM extends javax.swing.JFrame {
     private javax.swing.JButton abrirButton;
     private javax.swing.JTable alumnosTable;
     private javax.swing.JLabel apynLabel;
+    private javax.swing.JLabel apynMensajeLabel;
     private javax.swing.JTextField apynTextField;
     private javax.swing.JButton borrarButton;
     private javax.swing.JButton cancelarButton;
+    private javax.swing.JLabel cantMatAprobMensajeLabel;
     private javax.swing.JTextField cantMatAprobTextField;
     private javax.swing.JLabel cantMatAprobjLabel;
     private javax.swing.JComboBox<String> carreraComboBox;
     private javax.swing.JLabel carreraLabel;
     private javax.swing.JLabel dniLabel;
+    private javax.swing.JLabel dniMensajeLabel;
     private javax.swing.JTextField dniTextField;
+    private javax.swing.JComboBox<String> estadoComboBox;
+    private javax.swing.JLabel estadoLabel;
+    private javax.swing.JLabel estadoMensajeLabel;
+    private javax.swing.JLabel fecIngMensajeLabel;
     private javax.swing.JLabel fecNacLabel;
+    private javax.swing.JLabel fecNacMensajeLabel;
     private com.toedter.calendar.JDateChooser fechaIngDateChooser;
     private javax.swing.JLabel fechaIngresoLabel;
     private com.toedter.calendar.JDateChooser fechaNacDateChooser;
     private javax.swing.JButton guardarButton;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel mensajeLabel;
     private javax.swing.JButton nuevoButton;
     private javax.swing.JLabel promedioLabel;
+    private javax.swing.JLabel promedioMensajeLabel;
     private javax.swing.JTextField promedioTextField;
     private javax.swing.JButton seleccionarArchivoButton;
     private javax.swing.JTextField seleccionarArchivoTextField;
     private javax.swing.JComboBox<String> sexoComboBox;
     private javax.swing.JLabel sexoLabel;
     // End of variables declaration//GEN-END:variables
+
+
 
 }
