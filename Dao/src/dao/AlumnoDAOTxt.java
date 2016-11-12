@@ -15,12 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
 import persona.Alumno;
  
 /**
  *
- * @author Nestor
+ * @author Franco Scarpello
  */
 public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 {
@@ -132,7 +131,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
     @Override
     public List<Alumno> getTodos() throws IOException
     {
-        List<Alumno> alumnos = new ArrayList();
+        alumnos = new ArrayList();
         archivoRAF.seek(0);
         String linea;
         
