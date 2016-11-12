@@ -6,6 +6,7 @@
 
 package micalendar;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -14,60 +15,72 @@ import java.util.GregorianCalendar;
  *
  * @author Franco Scarpello
  */
-public class MiCalendar extends GregorianCalendar {
-     
-    public MiCalendar(int dia, int mes, int año) throws FechaInvalidaException {
+public class MiCalendar extends GregorianCalendar
+{
+    public MiCalendar(int dia, int mes, int año) throws FechaInvalidaException
+    {
         super(año, mes-1, dia);
-        this.setLenient(false);
          
-        try {
-            getDia();
-            getMes();
-            getAño();
-        } catch (Exception e) {
-            throw new FechaInvalidaException("La fecha no es válida");
+        super.setLenient(false);
+         
+        try
+        {
+            super.get(Calendar.DAY_OF_MONTH);
+            super.get(Calendar.MONTH);
+            super.get(Calendar.YEAR);
+        }
+        catch(Exception ex)
+        {
+            throw new FechaInvalidaException("La fecha " + dia + "/" + mes + "/" + año + " es inválida");
         }
     }
  
-    public MiCalendar()
+    public MiCalendar(Date date) throws FechaInvalidaException
     {
-        this.setLenient(false);
-    }
- 
-    public int getDia() {
-        return this.get(Calendar.DAY_OF_MONTH);
+        setTime(date);
+         
+        super.setLenient(false);
+         
+        try
+        {
+            super.get(Calendar.DAY_OF_MONTH);
+            super.get(Calendar.MONTH);
+            super.get(Calendar.YEAR);
+        }
+        catch(Exception ex)
+        {
+            throw new FechaInvalidaException("La fecha " + date.getDate() + "/" + date.getMonth() + "/" + date.getYear() + " es inválida");
+        }       
     }
      
-    public int getMes() {
-        return this.get(Calendar.MONTH)+1;
+     
+    public int getDia()
+    {
+        return get(Calendar.DAY_OF_MONTH);
     }
      
-    public int getAño() {
-        return this.get(Calendar.YEAR);
+     
+    public int getMes()
+    {
+        return get(Calendar.MONTH) + 1;
     }
+     
+     
+    public int getAño()
+    {
+        return get(Calendar.YEAR);
+    }
+     
      
     @Override
-    public String toString() {
+    public String toString()
+    {
         return String.format("%02d/%02d/%04d", getDia(), getMes(), getAño());
     }
      
      
-    public void setFechaTxt(String fechaTxt) throws FechaInvalidaException
+    public Date toDate()
     {
-        String[] dma = fechaTxt.split("/");
-         
-        set(DAY_OF_MONTH, Integer.valueOf(dma[0]));
-        set(MONTH, Integer.valueOf(dma[1]));
-        set(YEAR, Integer.valueOf(dma[2]));
-         
-        try {
-            getDia();
-            getMes();
-            getAño();
-        } catch (Exception e) {
-            throw new FechaInvalidaException("La fecha no es válida");
-        }       
+        return new Date(getTimeInMillis());
     }
 }
-     
-     
