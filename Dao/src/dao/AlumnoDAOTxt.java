@@ -33,7 +33,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 
  
     @Override
-    public void actualizar(Alumno obj) throws IOException
+    public void actualizar(Alumno obj) throws IOException, Exception
     {
             archivoRAF.seek(0);
          
@@ -43,17 +43,17 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
             while((linea = archivoRAF.readLine()) != null && !encontro)
             {
                 String[] campos = linea.split("\t");
-                if(Integer.valueOf(linea.substring(0, 8)) == obj.getDni() && !"B".equals(campos[8]) )
+                if(Integer.valueOf(linea.substring(0, 8)) == obj.getDni())
                 {                   
                     archivoRAF.seek(lineaArchivo);
-                    archivoRAF.writeBytes(obj.toString() + System.lineSeparator());
+                    archivoRAF.writeBytes(obj.toString() + "\tA");
                     encontro = true;
                 }
-                else
+                else 
                 {
                     lineaArchivo = archivoRAF.getFilePointer();
-                }                
-            } 
+                }             
+            }
     }
  
     @Override
@@ -66,15 +66,20 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
          
         while((linea = archivoRAF.readLine()) != null && !encontre)
         {
+            String[] campos = linea.split("\t");
             if(Integer.valueOf(linea.substring(0, 8)).equals(id))
             {
                 encontre = true;
                 alu = new Alumno();
                 alu.setFromTxt(linea);
+                
+                setAlumno(alu, campos);    
+
             }   
         }
          
         return alu;
+  
     }
      
      
@@ -98,51 +103,72 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
         return encontre;
     }
  
-     
+    @Override
+    public void darDeBaja(Alumno obj) throws Exception
+    {
+           archivoRAF.seek(0) ;
+           
+           String linea;
+           long lineaArchivo = 0;
+           boolean encontro = false;
+           while((linea = archivoRAF.readLine()) != null && !encontro){
+               String[] campos = linea.split("\t");
+               if(Integer.valueOf(linea.substring(0,8)) == obj.getDni()){
+                   archivoRAF.seek(lineaArchivo);
+                   archivoRAF.writeBytes(obj.toString() + "\tB");
+                   encontro = true;
+               }
+               else
+                   lineaArchivo = archivoRAF.getFilePointer();
+           }
+    }
+    
     @Override
     public void eliminar(Alumno obj) throws IOException
     {
-        archivoRAF.seek(0);
-        
-        String linea;
-        long lineaArchivo = 0;
-        boolean encontro = false;
-        while((linea = archivoRAF.readLine()) != null && !encontro)
-        {
-            if(Integer.valueOf(linea.substring(0, 8)) == obj.getDni()){
-                archivoRAF.writeChar(' ');
-                encontro = true;
-                System.out.println("Se ha eliminado el usuario");
-                
-            } else
-            {
-                lineaArchivo = archivoRAF.getFilePointer();
-            }                
-        }
+
     }
  
     @Override
     public List<Alumno> getTodos() throws IOException
     {
+        List<Alumno> alumnos = new ArrayList();
         archivoRAF.seek(0);
-         
         String linea;
-        //alumnos = new ArrayList<>();
+        
         while((linea = archivoRAF.readLine()) != null)
         {
+            String[] campos = linea.split("\t");
             try
             {
-                Alumno alu = new Alumno();
-                alu.setFromTxt(linea);
-                 
-                alumnos.add(alu);
+                if (!"B".equals(campos[8])) {
+                    Alumno alu = new Alumno();  
+                    
+                    setAlumno(alu, campos);
+
+                    alumnos.add(alu);
+                }
+
             }
             catch(Exception ex)
             {
                 Logger.getLogger(AlumnoDAOTxt.class.getName()).log(Level.SEVERE, null, ex);                
             }
-        }          
+        }        
         return alumnos;
+    }
+
+    private void setAlumno(Alumno alu, String[] campos) throws Exception, FechaInvalidaException, NumberFormatException {
+        alu.setDni(Integer.valueOf(campos[0]));
+        alu.setApyn(campos[1]);
+        String[] fechaNac = campos[2].split("/");
+        alu.setFechaNac(new MiCalendar(Integer.valueOf(fechaNac[0]),Integer.valueOf(fechaNac[1]) ,Integer.valueOf(fechaNac[2]) ));
+        alu.setSexo(campos[3].charAt(0));
+        String[] fechaIng = campos[4].split("/");
+        alu.setFechaIngr(new MiCalendar(Integer.valueOf(fechaIng[0]),Integer.valueOf(fechaIng[1]) ,Integer.valueOf(fechaIng[2]) ));
+        alu.setCantMatAprob (Integer.valueOf(campos[5]));
+        alu.setPromedio(Double.valueOf(campos[6].replace(",",".")));
+        alu.setCarrera(campos[7]);
     }
      
     @Override
@@ -153,7 +179,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
 
         archivoRAF.seek(archivoRAF.length());
         alumnos.add(alu);
-        archivoRAF.writeBytes(System.lineSeparator() + alu.toString());
+        archivoRAF.writeBytes(alu.toString() + "\tA" + System.lineSeparator());
     }
      
     private RandomAccessFile archivoRAF;
