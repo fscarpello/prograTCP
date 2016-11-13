@@ -5,8 +5,8 @@
  */
 package dao;
  
-import micalendar.FechaInvalidaException;
-import micalendar.MiCalendar;
+import calendar.FechaInvalidaException;
+import calendar.MiCalendar;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -101,31 +101,25 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
          
         return encontre;
     }
- 
+   
     @Override
-    public void darDeBaja(Alumno obj) throws Exception
+    public void eliminar(Alumno alu) throws IOException
     {
-           archivoRAF.seek(0) ;
-           
-           String linea;
-           long lineaArchivo = 0;
-           boolean encontro = false;
-           while((linea = archivoRAF.readLine()) != null && !encontro){
-               String[] campos = linea.split("\t");
-               if(Integer.valueOf(linea.substring(0,8)) == obj.getDni()){
-                   archivoRAF.seek(lineaArchivo);
-                   archivoRAF.writeBytes(obj.toString() + "\tB");
-                   encontro = true;
-               }
-               else
-                   lineaArchivo = archivoRAF.getFilePointer();
-           }
-    }
-    
-    @Override
-    public void eliminar(Alumno obj) throws IOException
-    {
+        archivoRAF.seek(0) ;
 
+        String linea;
+        long lineaArchivo = 0;
+        boolean encontro = false;
+        while((linea = archivoRAF.readLine()) != null && !encontro){
+            String[] campos = linea.split("\t");
+            if(Integer.valueOf(linea.substring(0,8)) == alu.getDni()){
+                archivoRAF.seek(lineaArchivo);
+                archivoRAF.writeBytes(alu.toString() + "\tB");
+                encontro = true;
+            }
+            else
+                lineaArchivo = archivoRAF.getFilePointer();
+        }
     }
  
     @Override
