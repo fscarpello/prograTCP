@@ -6,8 +6,10 @@
 
 package persona;
  
-import micalendar.FechaInvalidaException;
-import micalendar.MiCalendar;
+import calendar.FechaInvalidaException;
+import calendar.MiCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
  
 /**
@@ -28,7 +30,11 @@ public class Persona
          
         this.dni = dni;
          
-        fechaNac = new MiCalendar(1, 1, 1900);
+        try {
+            fechaNac = new MiCalendar(1, 1, 1900);
+        } catch (FechaInvalidaException ex) {
+            Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
      
      

@@ -5,8 +5,8 @@
  */
 package persona;
  
-import micalendar.FechaInvalidaException;
-import micalendar.MiCalendar;
+import calendar.FechaInvalidaException;
+import calendar.MiCalendar;
  
 /**
  *
@@ -16,7 +16,6 @@ public class Alumno extends Persona
 {
     public Alumno() throws FechaInvalidaException
     {
-        
     }
      
  
