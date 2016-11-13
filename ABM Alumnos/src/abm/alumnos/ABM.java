@@ -6,6 +6,7 @@
 package abm.alumnos;
 
 import dao.AlumnoDAOTxt;
+import dao.AlumnoDAOJDBC;
 import dao.DAO;
 import static java.awt.Color.*;
 import java.io.File;
@@ -17,8 +18,8 @@ import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
-import micalendar.FechaInvalidaException;
-import micalendar.MiCalendar;
+import calendar.FechaInvalidaException;
+import calendar.MiCalendar;
 import persona.Alumno;
 
 /**
@@ -506,14 +507,13 @@ public class ABM extends javax.swing.JFrame {
             alumno = new Alumno();
             alumno.setDni(Integer.valueOf(dniTextField.getText()));
 
-            alumno2 = dao.buscar(alumno.getDni());
+            alumno = dao.buscar(alumno.getDni());
 
-             if(alumno2 == null)
+             if(dao.buscar(alumno.getDni()) == null)
              {
                  JOptionPane.showMessageDialog(this, "No se encontro el Alumno con DNI " + String.valueOf(alumno.getDni()), "Error", JOptionPane.ERROR_MESSAGE);
                  return;
              }
-            alumno = alumno2;
             obtenerValores();
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
@@ -612,10 +612,13 @@ public class ABM extends javax.swing.JFrame {
             datosAlumno();
             if(estadoComboBox.getSelectedItem().equals("A"))
                 dao.actualizar(alumno);
+                
             if(estadoComboBox.getSelectedItem().equals("B"))
-                dao.darDeBaja(alumno);
+                dao.eliminar(alumno);
+            
             modeloTabla.setAlumnos(new ArrayList<Alumno>());
             modeloTabla.setAlumnos(dao.getTodos());
+            
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno actualizado.");
         } catch (Exception ex) {
@@ -703,6 +706,9 @@ public class ABM extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
+        
+
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {
