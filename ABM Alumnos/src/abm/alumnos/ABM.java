@@ -20,6 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import calendar.FechaInvalidaException;
 import calendar.MiCalendar;
+import java.sql.SQLException;
+import java.util.List;
 import persona.Alumno;
 
 /**
@@ -47,6 +49,7 @@ public class ABM extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        datosButtonGroup = new javax.swing.ButtonGroup();
         seleccionarArchivoTextField = new javax.swing.JTextField();
         seleccionarArchivoButton = new javax.swing.JButton();
         dniTextField = new javax.swing.JTextField();
@@ -81,6 +84,8 @@ public class ABM extends javax.swing.JFrame {
         dniMensajeLabel = new javax.swing.JLabel();
         estadoComboBox = new javax.swing.JComboBox<>();
         estadoLabel = new javax.swing.JLabel();
+        archivoTextoRadioButton = new javax.swing.JRadioButton();
+        baseDatosRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Gestión de Alumnos");
@@ -270,6 +275,13 @@ public class ABM extends javax.swing.JFrame {
 
         estadoLabel.setText("Estado");
 
+        datosButtonGroup.add(archivoTextoRadioButton);
+        archivoTextoRadioButton.setSelected(true);
+        archivoTextoRadioButton.setText("Archivo de Texto");
+
+        datosButtonGroup.add(baseDatosRadioButton);
+        baseDatosRadioButton.setText("Base de Datos");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -286,52 +298,70 @@ public class ABM extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(sexoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(sexoLabel)
+                                            .addComponent(dniMensajeLabel))
+                                        .addGap(73, 73, 73)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(apynMensajeLabel)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(promedioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(promedioTextField))
+                                                    .addComponent(promedioMensajeLabel))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(cantMatAprobjLabel)
+                                                    .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(cantMatAprobMensajeLabel)))))
+                                    .addComponent(estadoMensajeLabel))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fecIngMensajeLabel)
+                                            .addComponent(fechaIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fechaIngresoLabel))
+                                        .addGap(35, 35, 35)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(estadoLabel))
+                                        .addGap(91, 91, 91))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(47, 47, 47)
+                                        .addComponent(fecNacMensajeLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(dniLabel)
-                                    .addComponent(sexoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(sexoLabel)
-                                    .addComponent(dniMensajeLabel))
+                                    .addComponent(dniLabel))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(apynLabel)
-                                    .addComponent(apynMensajeLabel)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(promedioLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(promedioTextField))
-                                            .addComponent(promedioMensajeLabel))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cantMatAprobjLabel)
-                                            .addComponent(cantMatAprobTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(cantMatAprobMensajeLabel)))))
-                            .addComponent(estadoMensajeLabel))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fecIngMensajeLabel)
-                            .addComponent(fechaIngDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fechaIngresoLabel)
-                            .addComponent(fecNacLabel)
-                            .addComponent(fecNacMensajeLabel))
-                        .addGap(35, 35, 35)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(carreraLabel)
-                                    .addGap(48, 48, 48)))
-                            .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(estadoLabel))
-                        .addGap(39, 39, 39)
+                                    .addComponent(apynLabel))
+                                .addGap(51, 51, 51)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(fecNacLabel))
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(carreraLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(borrarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(guardarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(nuevoButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
                             .addComponent(abrirButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
-                            .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cancelarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(baseDatosRadioButton)
+                            .addComponent(archivoTextoRadioButton))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -343,7 +373,11 @@ public class ABM extends javax.swing.JFrame {
                     .addComponent(seleccionarArchivoButton))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(archivoTextoRadioButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(baseDatosRadioButton)
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(dniLabel)
                             .addComponent(apynLabel)
@@ -351,18 +385,18 @@ public class ABM extends javax.swing.JFrame {
                             .addComponent(carreraLabel))
                         .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(carreraComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 1, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fechaNacDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(dniTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(apynTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(carreraComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                                .addComponent(dniMensajeLabel))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(apynMensajeLabel))
+                                    .addComponent(dniMensajeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(apynMensajeLabel, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(fecNacMensajeLabel)
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -404,7 +438,7 @@ public class ABM extends javax.swing.JFrame {
                                 .addComponent(estadoMensajeLabel))
                             .addComponent(fecIngMensajeLabel))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -452,6 +486,7 @@ public class ABM extends javax.swing.JFrame {
         guardarButton.setEnabled(true);
         abrirButton.setEnabled(true);
         cancelarButton.setEnabled(true);
+        borrarButton.setEnabled(false);
         alumnosTable.setEnabled(true);
     }
      
@@ -469,35 +504,50 @@ public class ABM extends javax.swing.JFrame {
         guardarButton.setEnabled(false);
         abrirButton.setEnabled(false);
         cancelarButton.setEnabled(false);
+        borrarButton.setEnabled(false);
         alumnosTable.setEnabled(false);
     }
     
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
         
-        int ret = fileChooser.showOpenDialog(this);
-        if (ret != JFileChooser.APPROVE_OPTION) {
-            return;
+        if(archivoTextoRadioButton.isSelected()){
+            JFileChooser fileChooser = new JFileChooser();
+            
+            int ret = fileChooser.showOpenDialog(this);
+            if (ret != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
+            try
+            {
+                dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
+            }
+            catch(FileNotFoundException ex)
+            {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try
+            {
+                modeloTabla.setAlumnos(dao.getTodos());
+                limpiarCampos();
+            }
+            catch (Exception ex)
+            {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            activarCamposYBotones();
+            seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());            
         }
-        try
-        {
-            dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
+        else if(baseDatosRadioButton.isSelected()){
+            try {    
+                dao = new AlumnoDAOJDBC();
+                modeloTabla.setAlumnos(dao.getTodos());
+                activarCamposYBotones();
+            } catch (SQLException ex) {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        catch(FileNotFoundException ex)
-        {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try
-        {
-            modeloTabla.setAlumnos(dao.getTodos());
-            limpiarCampos();
-        }
-        catch (Exception ex)
-        {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        activarCamposYBotones();
-        seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
 
@@ -518,7 +568,7 @@ public class ABM extends javax.swing.JFrame {
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
         } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al recuperar información del archivo.\nAlumno no encontrado.\n(" + ex.getMessage() + ")", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error al recuperar información del archivo.\nAlumno no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
         estadoMensajeLabel.setForeground(RED);
         estadoMensajeLabel.setText("Alumno no encontrado");
         } 
@@ -569,6 +619,8 @@ public class ABM extends javax.swing.JFrame {
                     datosAlumno();
                     dao.insertar(alumno);
                     modeloTabla.fireTableDataChanged();
+                    modeloTabla.setAlumnos(new ArrayList<Alumno>());
+                    modeloTabla.setAlumnos(dao.getTodos());
                     estadoMensajeLabel.setForeground(GREEN);
                     estadoMensajeLabel.setText("Alumno insertado.");
                     limpiarCampos();
@@ -701,14 +753,12 @@ public class ABM extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
 
-        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Metal".equals(info.getName())) {
@@ -736,7 +786,6 @@ public class ABM extends javax.swing.JFrame {
     }
     
     private Alumno alumno;
-    private Alumno alumno2;
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
     private File archivoFile;
@@ -748,6 +797,8 @@ public class ABM extends javax.swing.JFrame {
     private javax.swing.JLabel apynLabel;
     private javax.swing.JLabel apynMensajeLabel;
     private javax.swing.JTextField apynTextField;
+    private javax.swing.JRadioButton archivoTextoRadioButton;
+    private javax.swing.JRadioButton baseDatosRadioButton;
     private javax.swing.JButton borrarButton;
     private javax.swing.JButton cancelarButton;
     private javax.swing.JLabel cantMatAprobMensajeLabel;
@@ -755,6 +806,7 @@ public class ABM extends javax.swing.JFrame {
     private javax.swing.JLabel cantMatAprobjLabel;
     private javax.swing.JComboBox<String> carreraComboBox;
     private javax.swing.JLabel carreraLabel;
+    private javax.swing.ButtonGroup datosButtonGroup;
     private javax.swing.JLabel dniLabel;
     private javax.swing.JLabel dniMensajeLabel;
     private javax.swing.JTextField dniTextField;
