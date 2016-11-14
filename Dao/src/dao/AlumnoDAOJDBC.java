@@ -5,6 +5,7 @@
  */
 package dao;
 
+import calendar.FechaInvalidaException;
 import calendar.MiCalendar;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,7 +28,7 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
     public AlumnoDAOJDBC() throws SQLException
     {
         //Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/universidad?user=root", "root", "Discus");
-        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/user=root", "root", "prisma");
+        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/persona?useSSL=false", "root", "prisma");
         /** Sentencia de BUSCAR*/
         String sentencia = "SELECT * FROM persona.alumno WHERE dni = ?";
 
@@ -36,7 +37,7 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
         /** Sentencia de NUEVO*/
         sentencia =
                 "INSERT INTO persona.alumno\n" +
-                "(dni, apyn, fecha_nac, sexo, fec_ing, mat_aprob, promedio, carrera)\n" +
+                "(dni, apyn, fec_nac, sexo, fec_ing, mat_aprob, promedio, carrera)\n" +
                 "VALUES\n" +
                 "(?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -63,16 +64,17 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
 
         /** Sentencia de ACTUALIZAR*/
 
-        sentencia = "UPDATE CROM persona.alumno\n" +
+        sentencia = "UPDATE persona.alumno\n" +
                     "SET\n" +
-                        "dni = ?,\n" +
-                        "apyn = ?\n" +
-                        "fec_nac = ?\n" +
-                        "sexo = ?\n" +
-                        "fec_ing = ?\n" +
-                        "mat_aprob = ?\n" +
-                        "promedio = ?\n" +
-                        "carrera = ?";
+                        "apyn = ?,\n" +
+                        "fec_nac = ?,\n" +
+                        "sexo = ?,\n" +
+                        "fec_ing = ?,\n" +
+                        "mat_aprob = ?,\n" +
+                        "promedio = ?,\n" +
+                        "carrera = ?\n" +
+                    "WHERE\n" +
+                        "dni = ?";
 
         pstmtActualizar = conexion.prepareStatement(sentencia);
     }
@@ -84,7 +86,11 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
             pstmtInsertar.setString(2, alu.getApyn());
             pstmtInsertar.setDate(3, alu.getFechaNac().toDate());
             pstmtInsertar.setString(4, String.valueOf(alu.getSexo()));
-            pstmtInsertar.setString(5, alu.getCarrera());
+            pstmtInsertar.setDate(5, alu.getFechaIngr().toDate());
+            pstmtInsertar.setInt(6, alu.getCantMatAprob());
+            pstmtInsertar.setDouble(7, alu.getPromedio());
+            pstmtInsertar.setString(8, alu.getCarrera());
+            
 
             pstmtInsertar.executeUpdate();
     }
@@ -92,14 +98,14 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
     @Override
     public void actualizar(Alumno alu) throws Exception
     {
-        pstmtActualizar.setInt(1, alu.getDni());
-        pstmtActualizar.setString(2, alu.getApyn());
-        pstmtActualizar.setDate(3, (alu.getFechaNac().toDate()));
-        pstmtActualizar.setString(4, String.valueOf(alu.getSexo()));
-        pstmtActualizar.setDate(5, (alu.getFechaIngr().toDate()));
-        pstmtActualizar.setInt(6, alu.getCantMatAprob());
-        pstmtActualizar.setDouble(7, alu.getPromedio());
-        pstmtActualizar.setString(8, alu.getCarrera());
+        pstmtActualizar.setString(1, alu.getApyn());
+        pstmtActualizar.setDate(2, (alu.getFechaNac().toDate()));
+        pstmtActualizar.setString(3, String.valueOf(alu.getSexo()));
+        pstmtActualizar.setDate(4, (alu.getFechaIngr().toDate()));
+        pstmtActualizar.setInt(5, alu.getCantMatAprob());
+        pstmtActualizar.setDouble(6, alu.getPromedio());
+        pstmtActualizar.setString(7, alu.getCarrera());
+        pstmtActualizar.setInt(8, alu.getDni());
         
         pstmtActualizar.executeUpdate();
     }
@@ -115,16 +121,8 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
                 return null;
 
             Alumno alu = new Alumno();
-
-            alu.setDni(id);
-            alu.setApyn(rs.getString("apyn"));
-            alu.setFechaNac(new MiCalendar(rs.getDate("fecha_nac")));
-            alu.setSexo(rs.getString("sexo").charAt(0));
-            alu.setFechaIngr(new MiCalendar(rs.getDate("fecha_ing")));
-            alu.setCantMatAprob(rs.getInt("mat_aprob"));
-            alu.setPromedio(rs.getDouble("promedio"));
-            alu.setCarrera(rs.getString("carrera"));
-
+            setAlumno(alu, rs);
+            
             return alu;
     }
 
@@ -167,19 +165,12 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
     public List<Alumno> getTodos() throws Exception
     {
         ResultSet rs; 
-
+        alumnos = new ArrayList();
         rs = pstmtGetTodos.executeQuery();
         try{
             while(rs.next()){
                 Alumno alu = new Alumno();
-                alu.setDni(rs.getInt(1));
-                alu.setApyn(rs.getString(2));
-                alu.setFechaNac(new MiCalendar(rs.getDate(3)));
-                alu.setSexo(rs.getString(4).charAt(0));
-                alu.setFechaIngr(new MiCalendar(rs.getDate(5)));
-                alu.setCantMatAprob(rs.getInt(6));
-                alu.setPromedio(rs.getDouble(7));
-                alu.setCarrera(rs.getString(8));
+                setAlumno(alu, rs);
 
                 alumnos.add(alu);
             }
@@ -188,6 +179,17 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
             throw new DAOException("Buscar falló: " + ex.getMessage());
         }    
         return alumnos;
+    }
+
+    private void setAlumno(Alumno alu, ResultSet rs) throws FechaInvalidaException, Exception, SQLException {
+        alu.setDni(rs.getInt(1));
+        alu.setApyn(rs.getString(2));
+        alu.setFechaNac(new MiCalendar(rs.getDate(3)));
+        alu.setSexo(rs.getString(4).charAt(0));
+        alu.setFechaIngr(new MiCalendar(rs.getDate(5)));
+        alu.setCantMatAprob(rs.getInt(6));
+        alu.setPromedio(rs.getDouble(7));
+        alu.setCarrera(rs.getString(8));
     }
 	
     private List<Alumno> alumnos = new ArrayList();
