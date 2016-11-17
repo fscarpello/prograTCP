@@ -542,6 +542,7 @@ public class ABM extends javax.swing.JFrame {
                 dao = new AlumnoDAOJDBC();
                 modeloTabla.setAlumnos(dao.getTodos());
                 activarCamposYBotones();
+                borrarButton.setEnabled(true);
             } catch (SQLException ex) {
                 Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -568,7 +569,7 @@ public class ABM extends javax.swing.JFrame {
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
         } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Error al recuperar información del archivo.\nAlumno no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
         estadoMensajeLabel.setForeground(RED);
         estadoMensajeLabel.setText("Alumno no encontrado");
         } 
@@ -633,21 +634,35 @@ public class ABM extends javax.swing.JFrame {
         catch(NumberFormatException ex2){
             estadoMensajeLabel.setForeground(RED);
             estadoMensajeLabel.setText("Alumno NO insertado.");
+            JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no insertado.\nRevisá los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex2);
         }
         catch(FechaInvalidaException ex3){
             estadoMensajeLabel.setForeground(RED);
             estadoMensajeLabel.setText("Alumno NO insertado.");
+            JOptionPane.showMessageDialog(this, "Alumnocon DNI " + alumno.getDni() + " no insertado.\nRevisá los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex3);
         } catch (Exception ex) {
             estadoMensajeLabel.setForeground(RED);
             estadoMensajeLabel.setText("Alumno NO insertado.");
+            JOptionPane.showMessageDialog(this, "Alumno con DNI" + alumno.getDni() + " no insertado.\nRevisá los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_nuevoButtonActionPerformed
 
     private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
-        
+        try {
+            alumno = new Alumno();
+            datosAlumno();
+            dao.eliminar(alumno);
+            modeloTabla.setAlumnos(new ArrayList<Alumno>());
+            modeloTabla.setAlumnos(dao.getTodos());
+        } catch (FechaInvalidaException ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Alumno con DNI" + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_borrarButtonActionPerformed
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
@@ -666,7 +681,7 @@ public class ABM extends javax.swing.JFrame {
                 dao.actualizar(alumno);
                 
             if(estadoComboBox.getSelectedItem().equals("B"))
-                dao.eliminar(alumno);
+                dao.darDeBaja(alumno);
             
             modeloTabla.setAlumnos(new ArrayList<Alumno>());
             modeloTabla.setAlumnos(dao.getTodos());
@@ -675,6 +690,7 @@ public class ABM extends javax.swing.JFrame {
             estadoMensajeLabel.setText("Alumno actualizado.");
         } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
             estadoMensajeLabel.setForeground(RED);
             estadoMensajeLabel.setText("Alumno NO actualizado.");
         }
