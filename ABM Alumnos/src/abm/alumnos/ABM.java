@@ -486,8 +486,14 @@ public class ABM extends javax.swing.JFrame {
         guardarButton.setEnabled(true);
         abrirButton.setEnabled(true);
         cancelarButton.setEnabled(true);
-        borrarButton.setEnabled(false);
         alumnosTable.setEnabled(true);
+        
+        if(archivoTextoRadioButton.isSelected()){
+            borrarButton.setEnabled(false);
+        }
+        else if(baseDatosRadioButton.isSelected()){
+            borrarButton.setEnabled(true);
+        }
     }
      
     private void desactivarCamposYBotones() {
@@ -542,7 +548,6 @@ public class ABM extends javax.swing.JFrame {
                 dao = new AlumnoDAOJDBC();
                 modeloTabla.setAlumnos(dao.getTodos());
                 activarCamposYBotones();
-                borrarButton.setEnabled(true);
             } catch (SQLException ex) {
                 Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
