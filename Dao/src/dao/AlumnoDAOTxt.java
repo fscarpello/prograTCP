@@ -105,6 +105,11 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
     @Override
     public void eliminar(Alumno alu) throws IOException
     {
+        
+    }
+ 
+    @Override
+    public void darDeBaja(Alumno alu) throws Exception {
         archivoRAF.seek(0) ;
 
         String linea;
@@ -121,7 +126,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
                 lineaArchivo = archivoRAF.getFilePointer();
         }
     }
- 
+    
     @Override
     public List<Alumno> getTodos() throws IOException
     {
@@ -177,5 +182,7 @@ public class AlumnoDAOTxt extends DAO<Alumno, Integer>
      
     private RandomAccessFile archivoRAF;
     private List<Alumno> alumnos = new ArrayList();
+
+
     
 }

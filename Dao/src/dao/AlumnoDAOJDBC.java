@@ -37,15 +37,15 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
         /** Sentencia de NUEVO*/
         sentencia =
                 "INSERT INTO persona.alumno\n" +
-                "(dni, apyn, fec_nac, sexo, fec_ing, mat_aprob, promedio, carrera)\n" +
+                "(dni, apyn, fec_nac, sexo, fec_ing, mat_aprob, promedio, carrera, estado)\n" +
                 "VALUES\n" +
-                "(?, ?, ?, ?, ?, ?, ?, ?)";
+                "(?, ?, ?, ?, ?, ?, ?, ?, 'A')";
 
         pstmtInsertar = conexion.prepareStatement(sentencia);
 
         /** Sentencia de GETTODOS*/
 
-        sentencia = "SELECT * FROM persona.alumno";
+        sentencia = "SELECT * FROM persona.alumno WHERE estado = 'A'";
         pstmtGetTodos = conexion.prepareStatement(sentencia);
 
         /** Sentencia de ELIMINAR */
@@ -72,7 +72,8 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
                         "fec_ing = ?,\n" +
                         "mat_aprob = ?,\n" +
                         "promedio = ?,\n" +
-                        "carrera = ?\n" +
+                        "carrera = ?,\n" +
+                        "estado = ?\n" +
                     "WHERE\n" +
                         "dni = ?";
 
@@ -98,6 +99,9 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
     @Override
     public void actualizar(Alumno alu) throws Exception
     {
+        if(!existe(alu.getDni()))
+            throw new DAOException("El alumno a actualizar no existe");
+        
         pstmtActualizar.setString(1, alu.getApyn());
         pstmtActualizar.setDate(2, (alu.getFechaNac().toDate()));
         pstmtActualizar.setString(3, String.valueOf(alu.getSexo()));
@@ -105,7 +109,27 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
         pstmtActualizar.setInt(5, alu.getCantMatAprob());
         pstmtActualizar.setDouble(6, alu.getPromedio());
         pstmtActualizar.setString(7, alu.getCarrera());
-        pstmtActualizar.setInt(8, alu.getDni());
+        pstmtActualizar.setString(8, String.valueOf('A'));
+        pstmtActualizar.setInt(9, alu.getDni());
+        
+        pstmtActualizar.executeUpdate();
+    }
+    
+    @Override
+    public void darDeBaja(Alumno alu) throws Exception {
+        
+        if(!existe(alu.getDni()))
+            throw new DAOException("El alumno a dar de baja no existe");
+        
+        pstmtActualizar.setString(1, alu.getApyn());
+        pstmtActualizar.setDate(2, (alu.getFechaNac().toDate()));
+        pstmtActualizar.setString(3, String.valueOf(alu.getSexo()));
+        pstmtActualizar.setDate(4, (alu.getFechaIngr().toDate()));
+        pstmtActualizar.setInt(5, alu.getCantMatAprob());
+        pstmtActualizar.setDouble(6, alu.getPromedio());
+        pstmtActualizar.setString(7, alu.getCarrera());
+        pstmtActualizar.setString(8, String.valueOf('B'));
+        pstmtActualizar.setInt(9, alu.getDni());
         
         pstmtActualizar.executeUpdate();
     }

@@ -15,6 +15,7 @@ public abstract class DAO<T, U>
 {
     public abstract void insertar(T obj) throws Exception;
     public abstract void actualizar(T obj) throws Exception;
+    public abstract void darDeBaja(T obj) throws Exception;
     public abstract T buscar(U id) throws Exception;
     public abstract boolean existe(U id) throws Exception;
     public abstract void eliminar(T obj) throws Exception;
