@@ -31,6 +31,7 @@ CREATE TABLE `alumno` (
   `mat_aprob` int(11) DEFAULT NULL,
   `promedio` double DEFAULT NULL,
   `carrera` varchar(3) DEFAULT NULL,
+  `estado` char(1) DEFAULT NULL,
   PRIMARY KEY (`dni`),
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -42,7 +43,7 @@ CREATE TABLE `alumno` (
 
 LOCK TABLES `alumno` WRITE;
 /*!40000 ALTER TABLE `alumno` DISABLE KEYS */;
-INSERT INTO `alumno` VALUES (10203040,'Johnson, Carl','1991-10-23','M','2010-03-27',41,6.11,'MED'),(37842567,'Scarpello, Franco Dario','1993-10-04','M','2013-03-18',20,7.93,'INF');
+INSERT INTO `alumno` VALUES (10203040,'Johnson, Carl','2016-11-03','M','2016-11-10',12,6.54,'INF','A'),(37842567,'Scarpello, Franco Dario','1993-10-04','M','2013-03-18',20,7.93,'INF','A');
 /*!40000 ALTER TABLE `alumno` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-11-13 22:47:19
+-- Dump completed on 2016-11-17 20:08:24
