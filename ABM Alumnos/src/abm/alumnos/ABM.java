@@ -54,7 +54,7 @@ public class ABM extends javax.swing.JFrame {
         seleccionarArchivoButton = new javax.swing.JButton();
         dniTextField = new javax.swing.JTextField();
         apynTextField = new javax.swing.JTextField();
-        carreraComboBox = new javax.swing.JComboBox<>();
+        carreraComboBox = new javax.swing.JComboBox<String>();
         dniLabel = new javax.swing.JLabel();
         apynLabel = new javax.swing.JLabel();
         fecNacLabel = new javax.swing.JLabel();
@@ -66,7 +66,7 @@ public class ABM extends javax.swing.JFrame {
         cancelarButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         alumnosTable = new javax.swing.JTable();
-        sexoComboBox = new javax.swing.JComboBox<>();
+        sexoComboBox = new javax.swing.JComboBox<String>();
         promedioTextField = new javax.swing.JTextField();
         cantMatAprobTextField = new javax.swing.JTextField();
         sexoLabel = new javax.swing.JLabel();
@@ -82,7 +82,7 @@ public class ABM extends javax.swing.JFrame {
         cantMatAprobMensajeLabel = new javax.swing.JLabel();
         fecIngMensajeLabel = new javax.swing.JLabel();
         dniMensajeLabel = new javax.swing.JLabel();
-        estadoComboBox = new javax.swing.JComboBox<>();
+        estadoComboBox = new javax.swing.JComboBox<String>();
         estadoLabel = new javax.swing.JLabel();
         archivoTextoRadioButton = new javax.swing.JRadioButton();
         baseDatosRadioButton = new javax.swing.JRadioButton();
@@ -132,7 +132,7 @@ public class ABM extends javax.swing.JFrame {
             }
         });
 
-        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INF", "ELE", "ABO", "MED" }));
+        carreraComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "INF", "ELE", "ABO", "MED" }));
         carreraComboBox.setEnabled(false);
 
         dniLabel.setText("DNI");
@@ -202,7 +202,7 @@ public class ABM extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(alumnosTable);
 
-        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "F" }));
+        sexoComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "M", "F" }));
         sexoComboBox.setEnabled(false);
 
         promedioTextField.setEnabled(false);
@@ -270,7 +270,7 @@ public class ABM extends javax.swing.JFrame {
         dniMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         dniMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
 
-        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "B" }));
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "A", "B" }));
         estadoComboBox.setEnabled(false);
 
         estadoLabel.setText("Estado");
@@ -278,9 +278,19 @@ public class ABM extends javax.swing.JFrame {
         datosButtonGroup.add(archivoTextoRadioButton);
         archivoTextoRadioButton.setSelected(true);
         archivoTextoRadioButton.setText("Archivo de Texto");
+        archivoTextoRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                archivoTextoRadioButtonMouseClicked(evt);
+            }
+        });
 
         datosButtonGroup.add(baseDatosRadioButton);
         baseDatosRadioButton.setText("Base de Datos");
+        baseDatosRadioButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                baseDatosRadioButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -490,9 +500,11 @@ public class ABM extends javax.swing.JFrame {
         
         if(archivoTextoRadioButton.isSelected()){
             borrarButton.setEnabled(false);
+            seleccionarArchivoButton.setEnabled(true);
         }
         else if(baseDatosRadioButton.isSelected()){
             borrarButton.setEnabled(true);
+            seleccionarArchivoButton.setEnabled(false);
         }
     }
      
@@ -512,48 +524,37 @@ public class ABM extends javax.swing.JFrame {
         cancelarButton.setEnabled(false);
         borrarButton.setEnabled(false);
         alumnosTable.setEnabled(false);
+        seleccionarArchivoButton.setEnabled(true);
     }
     
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
         
-        if(archivoTextoRadioButton.isSelected()){
-            JFileChooser fileChooser = new JFileChooser();
-            
-            int ret = fileChooser.showOpenDialog(this);
-            if (ret != JFileChooser.APPROVE_OPTION) {
-                return;
-            }
-            try
-            {
-                dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
-            }
-            catch(FileNotFoundException ex)
-            {
-                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try
-            {
-                modeloTabla.setAlumnos(dao.getTodos());
-                limpiarCampos();
-            }
-            catch (Exception ex)
-            {
-                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            activarCamposYBotones();
-            seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());            
+        JFileChooser fileChooser = new JFileChooser();
+
+        int ret = fileChooser.showOpenDialog(this);
+        if (ret != JFileChooser.APPROVE_OPTION) {
+            return;
         }
-        else if(baseDatosRadioButton.isSelected()){
-            try {    
-                dao = new AlumnoDAOJDBC();
-                modeloTabla.setAlumnos(dao.getTodos());
-                activarCamposYBotones();
-            } catch (SQLException ex) {
-                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        try
+        {
+            dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
         }
+        catch(FileNotFoundException ex)
+        {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try
+        {
+            modeloTabla.setAlumnos(dao.getTodos());
+            limpiarCampos();
+        }
+        catch (Exception ex)
+        {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        activarCamposYBotones();
+        seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());            
+
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
 
@@ -769,6 +770,25 @@ public class ABM extends javax.swing.JFrame {
     private void fechaIngDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaIngDateChooserFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_fechaIngDateChooserFocusLost
+
+    private void archivoTextoRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archivoTextoRadioButtonMouseClicked
+        modeloTabla.setAlumnos(new ArrayList<Alumno>());
+        desactivarCamposYBotones();
+    }//GEN-LAST:event_archivoTextoRadioButtonMouseClicked
+
+    private void baseDatosRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_baseDatosRadioButtonMouseClicked
+        seleccionarArchivoButton.setEnabled(false);
+        modeloTabla.setAlumnos(new ArrayList<Alumno>());
+        try {    
+            dao = new AlumnoDAOJDBC();
+            modeloTabla.setAlumnos(dao.getTodos());
+            activarCamposYBotones();
+        } catch (SQLException ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        }        
+    }//GEN-LAST:event_baseDatosRadioButtonMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1,6 +1,6 @@
 12345679	Perez, Joao                   	23/06/1970	M	12/04/1994	07	6,12	INF	A
 12345680	Perez, Marcos                  	14/01/1988	M	23/11/1992	55	6,55	INF	A
-37842567	Scarpello, Franco             	28/10/1993	M	15/01/2013	26	8,76	INF	A
+37842567	Scarpello, Franco Dario       	28/10/1993	M	15/01/2013	26	8,79	MED	A
 12345670	Perez, Juana                  	28/10/1993	F	15/01/2013	26	8,72	ABO	A
 37842568	Pedro, Juan                   	28/10/1993	M	15/01/2013	20	8,76	MED	A
 37842569	Scarpello, Franco             	28/10/1993	M	15/01/2013	20	8,76	ELE	B
