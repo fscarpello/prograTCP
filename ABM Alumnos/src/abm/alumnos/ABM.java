@@ -520,7 +520,6 @@ public class ABM extends javax.swing.JFrame {
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         try{
-            
             int ret = fileChooser.showOpenDialog(this);
             if (ret != JFileChooser.APPROVE_OPTION) {
                 return;
@@ -536,7 +535,6 @@ public class ABM extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
 
@@ -751,7 +749,7 @@ public class ABM extends javax.swing.JFrame {
         }else{
             try {
                 dao = new AlumnoDAOTxt(archivoFile);
-                seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());   
+                seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());
                 modeloTabla.setAlumnos(dao.getTodos());
                 limpiarCampos();
                 activarCamposYBotones();
@@ -769,6 +767,7 @@ public class ABM extends javax.swing.JFrame {
         try {    
             dao = new AlumnoDAOJDBC();
             modeloTabla.setAlumnos(dao.getTodos());
+            seleccionarArchivoTextField.setText("");
             activarCamposYBotones();
         } catch (SQLException ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
