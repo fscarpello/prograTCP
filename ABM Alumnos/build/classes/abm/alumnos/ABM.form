@@ -561,6 +561,9 @@
         <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Archivo de Texto"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="archivoTextoRadioButtonMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="baseDatosRadioButton">
       <Properties>
@@ -569,6 +572,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Base de Datos"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="baseDatosRadioButtonMouseClicked"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

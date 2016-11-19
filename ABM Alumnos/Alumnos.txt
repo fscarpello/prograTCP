@@ -1,7 +1,3 @@
-12345679	Perez, Joao                   	23/06/1970	M	12/04/1994	07	6,12	INF	A
-12345680	Perez, Marcos                  	14/01/1988	M	23/11/1992	55	6,55	INF	A
-37842567	Scarpello, Franco Dario       	28/10/1993	M	15/01/2013	26	8,79	MED	A
-12345670	Perez, Juana                  	28/10/1993	F	15/01/2013	26	8,72	ABO	A
-37842568	Pedro, Juan                   	28/10/1993	M	15/01/2013	20	8,76	MED	A
-37842569	Scarpello, Franco             	28/10/1993	M	15/01/2013	20	8,76	ELE	B
-20202020	Prueba, Base                  	10/11/2016	M	16/11/2016	14	7,61	ABO	A
+10203040	Lopez, Franco                 	10/11/2016	M	04/11/2016	12	6,12	INF	A
+12345678	Rodriguez, Gabriel            	15/11/2016	M	15/11/2016	25	7,11	MED	A
+90909090	Perez, Micaela                	02/11/2016	F	03/11/2016	22	4,11	ABO	A

@@ -583,7 +583,7 @@ public class ABM extends javax.swing.JFrame {
 
         private void obtenerValores() throws Exception {
             dniTextField.setText(String.valueOf(alumno.getDni()));
-            apynTextField.setText(alumno.getApyn());
+            apynTextField.setText(alumno.getApyn().trim());
             sexoComboBox.setSelectedItem(String.valueOf(alumno.getSexo()));
             promedioTextField.setText(String.valueOf(alumno.getPromedio()).replace('.', ','));
             cantMatAprobTextField.setText(String.valueOf(alumno.getCantMatAprob()));
@@ -625,7 +625,6 @@ public class ABM extends javax.swing.JFrame {
                     alumno = new Alumno();
                     datosAlumno();
                     dao.insertar(alumno);
-                    modeloTabla.fireTableDataChanged();
                     modeloTabla.setAlumnos(new ArrayList<Alumno>());
                     modeloTabla.setAlumnos(dao.getTodos());
                     estadoMensajeLabel.setForeground(GREEN);
