@@ -27,8 +27,8 @@ public class AlumnoDAOJDBC extends DAO<Alumno, Integer>
 
     public AlumnoDAOJDBC() throws SQLException
     {
-        //Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/universidad?user=root", "root", "Discus");
-        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/persona?useSSL=false", "root", "prisma");
+        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/persona?useSSL=false", "root", "unlm2015");
+        //Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/persona?useSSL=false", "root", "prisma");
         /** Sentencia de BUSCAR*/
         String sentencia = "SELECT * FROM persona.alumno WHERE dni = ?";
 
