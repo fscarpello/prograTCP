@@ -459,17 +459,11 @@
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fechaNacDateChooserFocusLost"/>
-      </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="fechaIngDateChooser">
       <Properties>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="fechaIngDateChooserFocusLost"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="estadoMensajeLabel">
     </Component>

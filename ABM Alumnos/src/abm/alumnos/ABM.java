@@ -238,18 +238,8 @@ public class ABM extends javax.swing.JFrame {
         fechaIngresoLabel.setText("Fecha de Ingreso");
 
         fechaNacDateChooser.setEnabled(false);
-        fechaNacDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fechaNacDateChooserFocusLost(evt);
-            }
-        });
 
         fechaIngDateChooser.setEnabled(false);
-        fechaIngDateChooser.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                fechaIngDateChooserFocusLost(evt);
-            }
-        });
 
         apynMensajeLabel.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         apynMensajeLabel.setForeground(new java.awt.Color(255, 0, 0));
@@ -528,32 +518,24 @@ public class ABM extends javax.swing.JFrame {
     }
     
     private void seleccionarArchivoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seleccionarArchivoButtonActionPerformed
-        
         JFileChooser fileChooser = new JFileChooser();
-
-        int ret = fileChooser.showOpenDialog(this);
-        if (ret != JFileChooser.APPROVE_OPTION) {
-            return;
-        }
-        try
-        {
+        try{
+            
+            int ret = fileChooser.showOpenDialog(this);
+            if (ret != JFileChooser.APPROVE_OPTION) {
+                return;
+            }
             dao = new AlumnoDAOTxt(fileChooser.getSelectedFile());
-        }
-        catch(FileNotFoundException ex)
-        {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try
-        {
+            seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());   
+            archivoFile = fileChooser.getSelectedFile();
             modeloTabla.setAlumnos(dao.getTodos());
             limpiarCampos();
-        }
-        catch (Exception ex)
-        {
+            activarCamposYBotones();
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);            
+        } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
-        activarCamposYBotones();
-        seleccionarArchivoTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());            
 
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
 
@@ -742,10 +724,6 @@ public class ABM extends javax.swing.JFrame {
 
     }//GEN-LAST:event_apynTextFieldFocusLost
 
-    private void fechaNacDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaNacDateChooserFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaNacDateChooserFocusLost
-
     private void promedioTextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_promedioTextFieldFocusLost
         if(promedioTextField.getText().isEmpty()){
             promedioMensajeLabel.setText("Ingrese Promedio");  
@@ -766,13 +744,23 @@ public class ABM extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cantMatAprobTextFieldFocusLost
 
-    private void fechaIngDateChooserFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_fechaIngDateChooserFocusLost
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fechaIngDateChooserFocusLost
-
     private void archivoTextoRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_archivoTextoRadioButtonMouseClicked
         modeloTabla.setAlumnos(new ArrayList<Alumno>());
-        desactivarCamposYBotones();
+        if(archivoFile == null){
+            desactivarCamposYBotones();    
+        }else{
+            try {
+                dao = new AlumnoDAOTxt(archivoFile);
+                seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());   
+                modeloTabla.setAlumnos(dao.getTodos());
+                limpiarCampos();
+                activarCamposYBotones();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_archivoTextoRadioButtonMouseClicked
 
     private void baseDatosRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_baseDatosRadioButtonMouseClicked
@@ -828,7 +816,7 @@ public class ABM extends javax.swing.JFrame {
     private Alumno alumno;
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
-    private File archivoFile;
+    private File archivoFile = null;
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
