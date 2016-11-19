@@ -542,10 +542,7 @@ public class ABM extends javax.swing.JFrame {
     
     private void abrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirButtonActionPerformed
         try {
-            alumno = new Alumno();
-            alumno.setDni(Integer.valueOf(dniTextField.getText()));
-
-            alumno = dao.buscar(alumno.getDni());
+            alumno = dao.buscar(Integer.valueOf(dniTextField.getText()));
 
              if(dao.buscar(alumno.getDni()) == null)
              {
@@ -564,7 +561,7 @@ public class ABM extends javax.swing.JFrame {
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Alumno con DNI " + dniTextField.getText() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
             estadoMensajeLabel.setForeground(RED);
             estadoMensajeLabel.setText("Alumno no encontrado");
         } 

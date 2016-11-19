@@ -1,3 +1,4 @@
 10203040	Camozzi, Gabriel              	21/11/2016	M	08/11/2016	13	7,21	INF	A
 21212121	Johnson, Maria                	11/11/2016	F	21/11/2016	17	4,11	MED	A
 37842567	Scarpello, Franco             	04/10/1993	M	19/03/2013	18	7,98	INF	A
+24004600	GUZMAN E.                     	24/01/1974	M	01/03/1994	42	5,28	ELE	A
