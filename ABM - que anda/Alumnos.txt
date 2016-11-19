@@ -1,0 +1,8 @@
+40317901	Figueredo Nicolas             	15/07/1995	M	01/01/2014	13	10,00	ING	A
+40379010	Cosme Fulanito                	15/07/1995	M	01/01/2000	15	09,99	ING	A
+11111111	Rosa Pardo                    	23/12/1997	F	06/07/2010	06	09,50	SLD	A
+22222222	Cami Forest                   	22/12/1997	F	01/01/2000	15	09,34	ING	A
+33333333	Facu Goloza                   	15/07/1995	F	01/01/2000	15	09,34	ING	A
+12345678	Uno Cualquiera                	01/01/2010	M	09/09/2015	05	09,00	ABG	B
+32165979	Carlos Vives                  	15/08/1996	F	08/07/1999	00	07,66	CMS	A
+05951212	Juana Perez                   	06/11/1999	F	02/11/2016	31	05,55	ARQ	A
