@@ -499,7 +499,7 @@ public class ABM extends javax.swing.JFrame {
     }
      
     private void desactivarCamposYBotones() {
-        dniTextField.setEnabled(false);
+        dniTextField.setEnabled(true);
         apynTextField.setEnabled(false);
         sexoComboBox.setEnabled(false);
         carreraComboBox.setEnabled(false);
@@ -508,9 +508,9 @@ public class ABM extends javax.swing.JFrame {
         fechaIngDateChooser.setEnabled(false);
         promedioTextField.setEnabled(false);
         cantMatAprobTextField.setEnabled(false);
-        nuevoButton.setEnabled(false);
+        nuevoButton.setEnabled(true);
         guardarButton.setEnabled(false);
-        abrirButton.setEnabled(false);
+        abrirButton.setEnabled(true);
         cancelarButton.setEnabled(false);
         borrarButton.setEnabled(false);
         alumnosTable.setEnabled(false);
@@ -529,15 +529,16 @@ public class ABM extends javax.swing.JFrame {
             archivoFile = fileChooser.getSelectedFile();
             modeloTabla.setAlumnos(dao.getTodos());
             limpiarCampos();
-            activarCamposYBotones();
+            nuevoButton.setEnabled(true);
+            dniTextField.setEnabled(true);
+            abrirButton.setEnabled(true);
+            cancelarButton.setEnabled(true);
         }catch (FileNotFoundException ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);            
         } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_seleccionarArchivoButtonActionPerformed
-
-
     
     private void abrirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirButtonActionPerformed
         try {
@@ -552,24 +553,31 @@ public class ABM extends javax.swing.JFrame {
                  return;
              }
             obtenerValores();
+            guardarButton.setEnabled(true);
+            cancelarButton.setEnabled(true);
+            if(archivoTextoRadioButton.isSelected()){
+                borrarButton.setEnabled(false);
+            }else if (baseDatosRadioButton.isSelected()){
+                borrarButton.setEnabled(true);
+            }
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
         } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
-        estadoMensajeLabel.setForeground(RED);
-        estadoMensajeLabel.setText("Alumno no encontrado");
+            JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
+            estadoMensajeLabel.setForeground(RED);
+            estadoMensajeLabel.setText("Alumno no encontrado");
         } 
     }//GEN-LAST:event_abrirButtonActionPerformed
 
-        private void obtenerValores() throws Exception {
-            dniTextField.setText(String.valueOf(alumno.getDni()));
-            apynTextField.setText(alumno.getApyn().trim());
-            sexoComboBox.setSelectedItem(String.valueOf(alumno.getSexo()));
-            promedioTextField.setText(String.valueOf(alumno.getPromedio()).replace('.', ','));
-            cantMatAprobTextField.setText(String.valueOf(alumno.getCantMatAprob()));
-            fechaNacDateChooser.setCalendar(alumno.getFechaNac());
-            fechaIngDateChooser.setCalendar(alumno.getFechaIngr());
-            carreraComboBox.setSelectedItem(alumno.getCarrera());
+    private void obtenerValores() throws Exception {
+        dniTextField.setText(String.valueOf(alumno.getDni()));
+        apynTextField.setText(alumno.getApyn().trim());
+        sexoComboBox.setSelectedItem(String.valueOf(alumno.getSexo()));
+        promedioTextField.setText(String.valueOf(alumno.getPromedio()).replace('.', ','));
+        cantMatAprobTextField.setText(String.valueOf(alumno.getCantMatAprob()));
+        fechaNacDateChooser.setCalendar(alumno.getFechaNac());
+        fechaIngDateChooser.setCalendar(alumno.getFechaIngr());
+        carreraComboBox.setSelectedItem(alumno.getCarrera());
     }
 
     
@@ -591,12 +599,62 @@ public class ABM extends javax.swing.JFrame {
     }
 
     private void nuevoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoButtonActionPerformed
+        limpiarCampos();
+        guardarButton.setEnabled(true);
+        cancelarButton.setEnabled(true);
+    }//GEN-LAST:event_nuevoButtonActionPerformed
+
+    private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
+        try {
+            alumno = new Alumno();
+            datosAlumno();
+            dao.eliminar(alumno);
+            modeloTabla.setAlumnos(new ArrayList<Alumno>());
+            modeloTabla.setAlumnos(dao.getTodos());
+        } catch (FechaInvalidaException ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Alumno con DNI" + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_borrarButtonActionPerformed
+
+    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
+        limpiarCampos();
+        borrarButton.setEnabled(false);
+        cancelarButton.setEnabled(false);
+        guardarButton.setEnabled(false);
+    }//GEN-LAST:event_cancelarButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.exit(0);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         try
         {
-            if(dao.buscar(Integer.valueOf(dniTextField.getText()))!= null) {
-                JOptionPane.showMessageDialog(this, "El DNI " + dniTextField.getText() + " ya existe.", "Error", JOptionPane.ERROR_MESSAGE);
+            if(dao.existe(Integer.valueOf(dniTextField.getText()))){
+                int aux = JOptionPane.showConfirmDialog(this, "El usuario ya existe con " + alumno.getDni() + " . ¿Desea guardarlo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (aux == JOptionPane.YES_OPTION) {
+                    alumno = new Alumno();
+                     datosAlumno();
+                     if(estadoComboBox.getSelectedItem().equals("A"))
+                         dao.actualizar(alumno);
+
+                     if(estadoComboBox.getSelectedItem().equals("B"))
+                         dao.darDeBaja(alumno);
+
+                     modeloTabla.setAlumnos(new ArrayList<Alumno>());
+                     modeloTabla.setAlumnos(dao.getTodos());
+
+                     estadoMensajeLabel.setForeground(GREEN);
+                     estadoMensajeLabel.setText("Alumno actualizado.");
+                }else {
+                if (aux == JOptionPane.NO_OPTION)
+                   return;
+                }
             }
-            else {
+            else if(!dao.existe(Integer.valueOf(dniTextField.getText()))){
                 if(!dniTextField.getText().isEmpty() && !apynTextField.getText().isEmpty()
                                                      && !promedioTextField.getText().isEmpty()
                                                      && !cantMatAprobTextField.getText().isEmpty()
@@ -633,46 +691,9 @@ public class ABM extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Alumno con DNI" + alumno.getDni() + " no insertado.\nRevisá los datos ingresados.", "Error", JOptionPane.ERROR_MESSAGE);
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_nuevoButtonActionPerformed
-
-    private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
+        
         try {
-            alumno = new Alumno();
-            datosAlumno();
-            dao.eliminar(alumno);
-            modeloTabla.setAlumnos(new ArrayList<Alumno>());
-            modeloTabla.setAlumnos(dao.getTodos());
-        } catch (FechaInvalidaException ex) {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Alumno con DNI" + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_borrarButtonActionPerformed
 
-    private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
-        limpiarCampos();
-    }//GEN-LAST:event_cancelarButtonActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        System.exit(0);
-    }//GEN-LAST:event_formWindowClosing
-
-    private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
-        try {
-            alumno = new Alumno();
-            datosAlumno();
-            if(estadoComboBox.getSelectedItem().equals("A"))
-                dao.actualizar(alumno);
-                
-            if(estadoComboBox.getSelectedItem().equals("B"))
-                dao.darDeBaja(alumno);
-            
-            modeloTabla.setAlumnos(new ArrayList<Alumno>());
-            modeloTabla.setAlumnos(dao.getTodos());
-            
-            estadoMensajeLabel.setForeground(GREEN);
-            estadoMensajeLabel.setText("Alumno actualizado.");
         } catch (Exception ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Alumno con DNI " + alumno.getDni() + " no encontrado.\n", "Error", JOptionPane.ERROR_MESSAGE);
@@ -752,7 +773,10 @@ public class ABM extends javax.swing.JFrame {
                 seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());
                 modeloTabla.setAlumnos(dao.getTodos());
                 limpiarCampos();
-                activarCamposYBotones();
+                nuevoButton.setEnabled(true);
+                dniTextField.setEnabled(true);
+                abrirButton.setEnabled(true);
+                cancelarButton.setEnabled(true);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -768,7 +792,10 @@ public class ABM extends javax.swing.JFrame {
             dao = new AlumnoDAOJDBC();
             modeloTabla.setAlumnos(dao.getTodos());
             seleccionarArchivoTextField.setText("");
-            activarCamposYBotones();
+            nuevoButton.setEnabled(true);
+            dniTextField.setEnabled(true);
+            abrirButton.setEnabled(true);
+            cancelarButton.setEnabled(true);
         } catch (SQLException ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
@@ -816,6 +843,7 @@ public class ABM extends javax.swing.JFrame {
     private DAO<Alumno, Integer> dao;
     private MiModeloTabla modeloTabla;
     private File archivoFile = null;
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

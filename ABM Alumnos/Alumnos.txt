@@ -1,4 +1,3 @@
-10203040	Lopez, Franco                 	10/11/2016	M	04/11/2016	12	6,12	INF	A
-12345678	Rodriguez, Gabriel            	15/11/2016	M	15/11/2016	25	7,11	MED	A
-90909090	Perez, Micaela                	02/11/2016	F	03/11/2016	22	4,11	ABO	A
-10203041	Ape, Nom                      	08/11/2016	M	02/11/2016	01	1,51	INF	A
+10203040	Camozzi, Gabriel              	21/11/2016	M	08/11/2016	13	7,21	INF	A
+21212121	Johnson, Maria                	11/11/2016	F	21/11/2016	17	4,11	MED	A
+37842567	Scarpello, Franco             	04/10/1993	M	19/03/2013	18	7,98	INF	A
