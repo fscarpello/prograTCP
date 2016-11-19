@@ -458,16 +458,16 @@ public class ABM extends javax.swing.JFrame {
         estadoComboBox.setSelectedItem("A");
         
         apynMensajeLabel.setText("");
-        apynTextField.setBorder(new LineBorder(GRAY));
+        //apynTextField.setBorder(new LineBorder(GRAY));
         
         dniMensajeLabel.setText("");
-        dniTextField.setBorder(new LineBorder(GRAY));
+        //dniTextField.setBorder(new LineBorder(GRAY));
         
         promedioMensajeLabel.setText("");            
-        promedioTextField.setBorder(new LineBorder(GRAY));
+        //promedioTextField.setBorder(new LineBorder(GRAY));
         
         cantMatAprobMensajeLabel.setText("");
-        cantMatAprobTextField.setBorder(new LineBorder(GRAY));
+        //cantMatAprobTextField.setBorder(new LineBorder(GRAY));
 
         estadoMensajeLabel.setText("");
     }
@@ -560,6 +560,7 @@ public class ABM extends javax.swing.JFrame {
             }else if (baseDatosRadioButton.isSelected()){
                 borrarButton.setEnabled(true);
             }
+            activarCamposYBotones();
             estadoMensajeLabel.setForeground(GREEN);
             estadoMensajeLabel.setText("Alumno encontrado");
         } catch (Exception ex) {
@@ -600,8 +601,8 @@ public class ABM extends javax.swing.JFrame {
 
     private void nuevoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nuevoButtonActionPerformed
         limpiarCampos();
-        guardarButton.setEnabled(true);
-        cancelarButton.setEnabled(true);
+        activarCamposYBotones();
+        borrarButton.setEnabled(false);
     }//GEN-LAST:event_nuevoButtonActionPerformed
 
     private void borrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_borrarButtonActionPerformed
@@ -621,9 +622,10 @@ public class ABM extends javax.swing.JFrame {
 
     private void cancelarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarButtonActionPerformed
         limpiarCampos();
-        borrarButton.setEnabled(false);
-        cancelarButton.setEnabled(false);
-        guardarButton.setEnabled(false);
+        desactivarCamposYBotones();
+        nuevoButton.setEnabled(true);
+        abrirButton.setEnabled(true);
+        dniTextField.setEnabled(true);
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -634,7 +636,7 @@ public class ABM extends javax.swing.JFrame {
         try
         {
             if(dao.existe(Integer.valueOf(dniTextField.getText()))){
-                int aux = JOptionPane.showConfirmDialog(this, "El usuario ya existe con " + alumno.getDni() + " . ¿Desea guardarlo?", "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION);
+                int aux = JOptionPane.showConfirmDialog(this, "El usuario ya existe con " + alumno.getDni() + " . ¿Desea guardarlo?", "Advertencia", JOptionPane.YES_NO_OPTION);
                 if (aux == JOptionPane.YES_OPTION) {
                     alumno = new Alumno();
                      datosAlumno();
@@ -773,10 +775,11 @@ public class ABM extends javax.swing.JFrame {
                 seleccionarArchivoTextField.setText(archivoFile.getAbsolutePath());
                 modeloTabla.setAlumnos(dao.getTodos());
                 limpiarCampos();
+                desactivarCamposYBotones();
                 nuevoButton.setEnabled(true);
                 dniTextField.setEnabled(true);
                 abrirButton.setEnabled(true);
-                cancelarButton.setEnabled(true);
+                cancelarButton.setEnabled(false);
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
             } catch (Exception ex) {
@@ -792,10 +795,12 @@ public class ABM extends javax.swing.JFrame {
             dao = new AlumnoDAOJDBC();
             modeloTabla.setAlumnos(dao.getTodos());
             seleccionarArchivoTextField.setText("");
+            limpiarCampos();
+            desactivarCamposYBotones();
             nuevoButton.setEnabled(true);
             dniTextField.setEnabled(true);
             abrirButton.setEnabled(true);
-            cancelarButton.setEnabled(true);
+            cancelarButton.setEnabled(false);
         } catch (SQLException ex) {
             Logger.getLogger(ABM.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
