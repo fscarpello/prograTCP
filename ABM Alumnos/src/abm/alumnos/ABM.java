@@ -626,6 +626,13 @@ public class ABM extends javax.swing.JFrame {
         nuevoButton.setEnabled(true);
         abrirButton.setEnabled(true);
         dniTextField.setEnabled(true);
+        if(archivoTextoRadioButton.isSelected()){
+            seleccionarArchivoButton.setEnabled(true);
+        }
+        else if(baseDatosRadioButton.isSelected()){
+            seleccionarArchivoButton.setEnabled(false);
+        }
+        
     }//GEN-LAST:event_cancelarButtonActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
